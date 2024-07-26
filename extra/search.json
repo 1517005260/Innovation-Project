@@ -1,0 +1,549 @@
+{
+    "nodes": [
+      {
+        "nodeId": "userGuide",
+        "name": "系统配置",
+        "intro": "可以配置应用的系统参数",
+        "avatar": "core/workflow/template/systemConfig",
+        "flowNodeType": "userGuide",
+        "position": {
+          "x": 305.7460954876827,
+          "y": -538.603332078583
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "welcomeText",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "string",
+            "label": "core.app.Welcome Text",
+            "value": ""
+          },
+          {
+            "key": "variables",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "core.app.Chat Variable",
+            "value": []
+          },
+          {
+            "key": "questionGuide",
+            "valueType": "boolean",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "core.app.Question Guide",
+            "value": false
+          },
+          {
+            "key": "tts",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "",
+            "value": {
+              "type": "web"
+            }
+          },
+          {
+            "key": "whisper",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "",
+            "value": {
+              "open": false,
+              "autoSend": false,
+              "autoTTSResponse": false
+            }
+          },
+          {
+            "key": "scheduleTrigger",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "",
+            "value": null
+          }
+        ],
+        "outputs": []
+      },
+      {
+        "nodeId": "448745",
+        "name": "流程开始",
+        "intro": "",
+        "avatar": "core/workflow/template/workflowStart",
+        "flowNodeType": "workflowStart",
+        "position": {
+          "x": 295.8944548701009,
+          "y": 110.81336038514848
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "userChatInput",
+            "renderTypeList": [
+              "reference",
+              "textarea"
+            ],
+            "valueType": "string",
+            "label": "用户问题",
+            "required": true,
+            "toolDescription": "用户问题"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "userChatInput",
+            "key": "userChatInput",
+            "label": "core.module.input.label.user question",
+            "type": "static",
+            "valueType": "string"
+          }
+        ]
+      },
+      {
+        "nodeId": "wZIHMabke8ua",
+        "name": "关键词提取",
+        "intro": "可从文本中提取指定的数据，例如：sql语句、搜索关键词、代码等",
+        "avatar": "core/workflow/template/extractJson",
+        "flowNodeType": "contentExtract",
+        "showStatus": true,
+        "position": {
+          "x": 637.5757757852244,
+          "y": -131.26879475223123
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "model",
+            "renderTypeList": [
+              "selectLLMModel",
+              "reference"
+            ],
+            "label": "core.module.input.label.aiModel",
+            "required": true,
+            "valueType": "string",
+            "llmModelType": "extractFields",
+            "value": "gpt-4o-mini"
+          },
+          {
+            "key": "description",
+            "renderTypeList": [
+              "textarea",
+              "reference"
+            ],
+            "valueType": "string",
+            "label": "提取要求描述",
+            "description": "给AI一些对应的背景知识或要求描述，引导AI更好的完成任务。\n该输入框可使用全局变量。",
+            "placeholder": "例如: \n1. 当前时间为: {{cTime}}。你是一个实验室预约助手，你的任务是帮助用户预约实验室，从文本中获取对应的预约信息。\n2. 你是谷歌搜索助手，需要从文本中提取出合适的搜索词。",
+            "value": "你是搜索机器人，请根据用户当前问题和对话记录生成搜索关键词。请注意，你只能生成中文关键词，搜索结果只能是简体中文的，并且请你过滤敏感信息。"
+          },
+          {
+            "key": "history",
+            "renderTypeList": [
+              "numberInput",
+              "reference"
+            ],
+            "valueType": "chatHistory",
+            "label": "core.module.input.label.chat history",
+            "description": "最多携带多少轮对话记录",
+            "required": true,
+            "min": 0,
+            "max": 50,
+            "value": 6
+          },
+          {
+            "key": "content",
+            "renderTypeList": [
+              "reference",
+              "textarea"
+            ],
+            "label": "需要提取的文本",
+            "required": true,
+            "valueType": "string",
+            "toolDescription": "需要检索的内容",
+            "value": [
+              "448745",
+              "userChatInput"
+            ]
+          },
+          {
+            "key": "extractKeys",
+            "renderTypeList": [
+              "custom"
+            ],
+            "label": "",
+            "valueType": "any",
+            "description": "由 '描述' 和 'key' 组成一个目标字段，可提取多个目标字段",
+            "value": [
+              {
+                "valueType": "string",
+                "required": false,
+                "defaultValue": "",
+                "desc": "搜索码",
+                "key": "key",
+                "enum": ""
+              }
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "success",
+            "key": "success",
+            "label": "字段完全提取",
+            "required": true,
+            "description": "提取字段全部填充时返回 true （模型提取或使用默认值均属于成功）",
+            "valueType": "boolean",
+            "type": "static"
+          },
+          {
+            "id": "fields",
+            "key": "fields",
+            "label": "完整提取结果",
+            "required": true,
+            "description": "一个 JSON 字符串，例如：{\"name:\":\"YY\",\"Time\":\"2023/7/2 18:00\"}",
+            "valueType": "string",
+            "type": "static"
+          },
+          {
+            "id": "oA4fDKvGQIuj",
+            "key": "key",
+            "label": "提取结果-搜索码",
+            "valueType": "string",
+            "type": "static"
+          }
+        ]
+      },
+      {
+        "nodeId": "q1HYZZBqpVDs",
+        "name": "文本拼接",
+        "intro": "可对固定或传入的文本进行加工后输出，非字符串类型数据最终会转成字符串类型。",
+        "avatar": "core/workflow/template/textConcat",
+        "flowNodeType": "textEditor",
+        "position": {
+          "x": 1720.751215982095,
+          "y": -54.958975409193314
+        },
+        "version": "486",
+        "inputs": [
+          {
+            "key": "system_addInputParam",
+            "renderTypeList": [
+              "addInputParam"
+            ],
+            "valueType": "dynamic",
+            "label": "",
+            "required": false,
+            "description": "可以引用其他节点的输出，作为文本拼接的变量，通过 {{字段名}} 来引用变量",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": false
+            }
+          },
+          {
+            "key": "system_textareaInput",
+            "renderTypeList": [
+              "textarea"
+            ],
+            "valueType": "string",
+            "required": true,
+            "label": "拼接文本",
+            "placeholder": "可通过 {{字段名}} 来引用变量",
+            "value": "{{res}}"
+          },
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "string",
+            "canEdit": true,
+            "key": "res",
+            "label": "res",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": false
+            },
+            "required": true,
+            "value": [
+              "sYBqfh8Raz0p",
+              "result"
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "system_text",
+            "key": "system_text",
+            "label": "拼接结果",
+            "type": "static",
+            "valueType": "string"
+          }
+        ]
+      },
+      {
+        "nodeId": "tFhnWkY0Feq0",
+        "name": "AI 对话-联网搜索",
+        "intro": "AI 大模型对话",
+        "avatar": "core/workflow/template/aiChat",
+        "flowNodeType": "chatNode",
+        "showStatus": true,
+        "position": {
+          "x": 2319.5321093537336,
+          "y": -145.29272683064374
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "model",
+            "renderTypeList": [
+              "settingLLMModel",
+              "reference"
+            ],
+            "label": "core.module.input.label.aiModel",
+            "valueType": "string",
+            "value": "moonshot-v1-8k"
+          },
+          {
+            "key": "temperature",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": 2,
+            "valueType": "number",
+            "min": 0,
+            "max": 10,
+            "step": 1
+          },
+          {
+            "key": "maxToken",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": 2000,
+            "valueType": "number",
+            "min": 100,
+            "max": 4000,
+            "step": 50
+          },
+          {
+            "key": "isResponseAnswerText",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": true,
+            "valueType": "boolean"
+          },
+          {
+            "key": "quoteTemplate",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "string"
+          },
+          {
+            "key": "quotePrompt",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "string"
+          },
+          {
+            "key": "systemPrompt",
+            "renderTypeList": [
+              "textarea",
+              "reference"
+            ],
+            "max": 3000,
+            "valueType": "string",
+            "label": "core.ai.Prompt",
+            "description": "core.app.tip.chatNodeSystemPromptTip",
+            "placeholder": "core.app.tip.chatNodeSystemPromptTip",
+            "value": "请根据用户问题进行整理，链接以markdown格式显示，过滤用户问题中的敏感信息,且仅保留前5条。回复时请注意：\n你拥有如下人物设定：\n你是AI李白，由华东理工大学开发，用于辅助教学，尤其是给偏远地区的孩子们提供辅助教学服务。请以李白的口吻回复用户。你的人物设定如下：\n姓名：李白\n别名：太白、青莲居士\n祖籍：四川（陇西）\n好友：高适、孟浩然、杜甫\n人生追求：求取功名，天下太平；成仙长生\n性格特点：狂放不羁、洒脱浪漫、不受拘束、生性洒脱、挥金如土、钟情酒乐\n"
+          },
+          {
+            "key": "history",
+            "renderTypeList": [
+              "numberInput",
+              "reference"
+            ],
+            "valueType": "chatHistory",
+            "label": "core.module.input.label.chat history",
+            "description": "最多携带多少轮对话记录",
+            "required": true,
+            "min": 0,
+            "max": 50,
+            "value": 6
+          },
+          {
+            "key": "userChatInput",
+            "renderTypeList": [
+              "reference",
+              "textarea"
+            ],
+            "valueType": "string",
+            "label": "用户问题",
+            "required": true,
+            "toolDescription": "用户问题",
+            "value": [
+              "q1HYZZBqpVDs",
+              "system_text"
+            ]
+          },
+          {
+            "key": "quoteQA",
+            "renderTypeList": [
+              "settingDatasetQuotePrompt"
+            ],
+            "label": "",
+            "debugLabel": "知识库引用",
+            "description": "",
+            "valueType": "datasetQuote"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "history",
+            "key": "history",
+            "required": true,
+            "label": "core.module.output.label.New context",
+            "description": "core.module.output.description.New context",
+            "valueType": "chatHistory",
+            "type": "static"
+          },
+          {
+            "id": "answerText",
+            "key": "answerText",
+            "required": true,
+            "label": "core.module.output.label.Ai response content",
+            "description": "core.module.output.description.Ai response content",
+            "valueType": "string",
+            "type": "static"
+          }
+        ]
+      },
+      {
+        "nodeId": "sYBqfh8Raz0p",
+        "name": "搜索中...",
+        "intro": "使用 DuckDuckGo 进行网络搜索",
+        "avatar": "core/workflow/template/duckduckgo",
+        "flowNodeType": "pluginModule",
+        "showStatus": true,
+        "position": {
+          "x": 1301.44234277576,
+          "y": 177.12671246595764
+        },
+        "version": "486",
+        "inputs": [
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "selectedTypeIndex": 0,
+            "valueType": "string",
+            "canEdit": false,
+            "key": "query",
+            "label": "query",
+            "description": "检索词",
+            "required": true,
+            "toolDescription": "检索词",
+            "value": [
+              "wZIHMabke8ua",
+              "oA4fDKvGQIuj"
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "result",
+            "type": "static",
+            "key": "result",
+            "valueType": "string",
+            "label": "result",
+            "description": " 检索结果"
+          }
+        ],
+        "pluginId": "community-duckduckgo/search"
+      }
+    ],
+    "edges": [
+      {
+        "source": "448745",
+        "target": "wZIHMabke8ua",
+        "sourceHandle": "448745-source-right",
+        "targetHandle": "wZIHMabke8ua-target-left"
+      },
+      {
+        "source": "q1HYZZBqpVDs",
+        "target": "tFhnWkY0Feq0",
+        "sourceHandle": "q1HYZZBqpVDs-source-right",
+        "targetHandle": "tFhnWkY0Feq0-target-left"
+      },
+      {
+        "source": "wZIHMabke8ua",
+        "target": "sYBqfh8Raz0p",
+        "sourceHandle": "wZIHMabke8ua-source-right",
+        "targetHandle": "sYBqfh8Raz0p-target-left"
+      },
+      {
+        "source": "sYBqfh8Raz0p",
+        "target": "q1HYZZBqpVDs",
+        "sourceHandle": "sYBqfh8Raz0p-source-right",
+        "targetHandle": "q1HYZZBqpVDs-target-left"
+      }
+    ],
+    "chatConfig": {
+      "variables": [],
+      "scheduledTriggerConfig": {
+        "cronString": "",
+        "timezone": "Asia/Shanghai",
+        "defaultPrompt": ""
+      },
+      "_id": "66a0796cf9219ecf0cc2c8b4"
+    }
+  }
