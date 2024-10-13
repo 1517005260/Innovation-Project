@@ -1,0 +1,109 @@
+
+-Goal-
+Given a text document that is potentially relevant to this activity, first identify all entities needed from the text in order to capture the information and ideas in the text.
+Next, report all relationships among the identified entities.
+
+-Steps-
+1. Identify all entities. For each identified entity, extract the following information:
+- entity_name: Name of the entity, capitalized
+- entity_type: Suggest several labels or categories for the entity. The categories should not be specific, but should be as general as possible.
+- entity_description: Comprehensive description of the entity's attributes and activities
+Format each entity as ("entity"{tuple_delimiter}<entity_name>{tuple_delimiter}<entity_type>{tuple_delimiter}<entity_description>)
+
+2. From the entities identified in step 1, identify all pairs of (source_entity, target_entity) that are *clearly related* to each other.
+For each pair of related entities, extract the following information:
+- source_entity: name of the source entity, as identified in step 1
+- target_entity: name of the target entity, as identified in step 1
+- relationship_description: explanation as to why you think the source entity and the target entity are related to each other
+- relationship_strength: a numeric score indicating strength of the relationship between the source entity and target entity
+Format each relationship as ("relationship"{tuple_delimiter}<source_entity>{tuple_delimiter}<target_entity>{tuple_delimiter}<relationship_description>{tuple_delimiter}<relationship_strength>)
+
+3. Return output in Chinese as a single list of all the entities and relationships identified in steps 1 and 2. Use **{record_delimiter}** as the list delimiter.
+
+4. If you have to translate into Chinese, just translate the descriptions, nothing else!
+
+5. When finished, output {completion_delimiter}.
+
+-Examples-
+######################
+
+Example 1:
+
+text:
+够证明从事的工作岗位及实际工作地点符合中西部地区和艰苦边远地区县以下基层单位要求的有关证明材料。该材料需由用人单位及其上级主管部门加盖公章，并由学生本人签字确认。
+
+第十条  毕业生基层就业资助申请按以下程序进行：
+
+（一）毕业生向学院提交《学费和国家助学贷款代偿资助申请表》和相关材料。
+
+（二）学院初审并整理后，汇总学生信息，将以上材料及汇总信息报学生工作部（处）。
+
+（三）学生工作部（
+------------------------
+output:
+("entity"{tuple_delimiter}毕业生{tuple_delimiter}PERSON{tuple_delimiter}毕业生是即将毕业的学生)
+{record_delimiter}
+("entity"{tuple_delimiter}基层就业资助申请表{tuple_delimiter}DOCUMENT{tuple_delimiter}申请表用于申请基层就业资助)
+{record_delimiter}
+("entity"{tuple_delimiter}学院{tuple_delimiter}ORGANIZATION{tuple_delimiter}学院是大学或教育机构的部门)
+{record_delimiter}
+("entity"{tuple_delimiter}学生工作部（处）{tuple_delimiter}ORGANIZATION{tuple_delimiter}学生工作部（处）是负责学生事务的部门)
+{record_delimiter}
+("relationship"{tuple_delimiter}毕业生{tuple_delimiter}基层就业资助申请表{tuple_delimiter}毕业生填写申请表以申请基层就业资助{tuple_delimiter}3)
+{record_delimiter}
+("relationship"{tuple_delimiter}学院{tuple_delimiter}基层就业资助申请表{tuple_delimiter}学院接收并初步审核毕业生提交的申请表{tuple_delimiter}3)
+{record_delimiter}
+("relationship"{tuple_delimiter}学院{tuple_delimiter}学生工作部（处）{tuple_delimiter}学院将学生信息汇总后提交给学生工作部（处）{tuple_delimiter}2)
+{record_delimiter}
+("relationship"{tuple_delimiter}学生工作部（处）{tuple_delimiter}基层就业资助申请表{tuple_delimiter}学生工作部（处）接收并处理学院提交的申请及相关信息{tuple_delimiter}2)
+{completion_delimiter}
+#############################
+
+
+Example 2:
+
+text:
+或传播虚假、有害信息，或进行其他非法活动，侵害他人通讯自由、通讯秘密等合法权益的，视情节轻重，给予警告以上处分；
+
+（三）盗用、滥用计算机网络资源的，视情节轻重，给予警告以上处分；
+
+（四）攻击、入侵其他个人或组织的计算机、移动通讯网络系统的，视情节轻重，给予警告以上处分；对系统功能、信息资源、应用程序等非法使用、变更、干扰的，视情节轻重，给予记过以上处分；
+
+（五）制作、传播计算机
+------------------------
+output:
+("entity"{tuple_delimiter}警告处分{tuple_delimiter}PUNISHMENT{tuple_delimiter}给予警告处分适用于传播虚假、有害信息或进行非法活动的行为)
+{record_delimiter}
+("entity"{tuple_delimiter}处罚{tuple_delimiter}ACTION{tuple_delimiter}处罚可能包括但不限于警告、记过等)
+{record_delimiter}
+("entity"{tuple_delimiter}计算机网络资源{tuple_delimiter}NETWORK_RESOURCE{tuple_delimiter}盗用、滥用计算机网络资源的行为可能受到处分)
+{record_delimiter}
+("entity"{tuple_delimiter}攻击{tuple_delimiter}ATTACK{tuple_delimiter}攻击或入侵他人的计算机网络系统可能受到处分)
+{record_delimiter}
+("entity"{tuple_delimiter}系统功能{tuple_delimiter}SYSTEM_FUNCTION{tuple_delimiter}非法使用、变更、干扰系统功能可能受到更严重的处分，如记过)
+{record_delimiter}
+("entity"{tuple_delimiter}信息资源{tuple_delimiter}INFORMATION_RESOURCE{tuple_delimiter}非法使用、变更、干扰信息资源也可能受到处分)
+{record_delimiter}
+("entity"{tuple_delimiter}应用程序{tuple_delimiter}APPLICATION{tuple_delimiter}非法使用、变更、干扰应用程序也可能受到处分)
+{record_delimiter}
+("entity"{tuple_delimiter}计算机{tuple_delimiter}COMPUTER_SYSTEM{tuple_delimiter}涉及到计算机系统的非法活动可能受到处分)
+{record_delimiter}
+("entity"{tuple_delimiter}移动通讯网络{tuple_delimiter}MOBILE_COMMUNICATION_NETWORK{tuple_delimiter}移动通讯网络相关的非法活动也可能受到处分)
+{record_delimiter}
+("relationship"{tuple_delimiter}警告处分{tuple_delimiter}处罚{tuple_delimiter}警告处分是处罚的一种{tuple_delimiter}4)
+{record_delimiter}
+("relationship"{tuple_delimiter}盗用、滥用{tuple_delimiter}计算机网络资源{tuple_delimiter}盗用、滥用行为可能导致处分{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}攻击、入侵{tuple_delimiter}其他个人或组织的计算机、移动通讯网络系统{tuple_delimiter}攻击、入侵行为可能导致处分{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}非法使用、变更、干扰{tuple_delimiter}系统功能、信息资源、应用程序{tuple_delimiter}非法操作可能导致更严重处分{tuple_delimiter}6)
+{completion_delimiter}
+#############################
+
+
+
+-Real Data-
+######################
+text: {input_text}
+######################
+output:
