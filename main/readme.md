@@ -65,3 +65,5 @@ INFO:     Uvicorn running on http://0.0.0.0:8012 (Press CTRL+C to quit)
 7. 知识图谱可视化
 - 进入`graphrag/utils`文件夹，运行neo4jTest.py即可
 - 登录Neo4j，即可查看可视化图谱
+
+7.1 使用[这份代码](./graphrag/utils/my_visualize.py)进行知识图谱可视化，最后可以在本地的某个端口（例如 http://127.0.0.1:44465）访问
