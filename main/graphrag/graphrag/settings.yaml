@@ -4,9 +4,10 @@ llm:
   api_key: ${GRAPHRAG_CHAT_API_KEY}
   type: openai_chat # or azure_openai_chat
   model: ${GRAPHRAG_CHAT_MODEL}
-  model_supports_json: true # recommended if this is available for your model.
+  model_supports_json: false # recommended if this is available for your model.
   # audience: "https://cognitiveservices.azure.com/.default"
-  # max_tokens: 4000
+  batch_max_tokens: 8191
+  max_tokens: 4000
   # request_timeout: 180.0
   api_base: ${GRAPHRAG_API_BASE}
   # api_version: 2024-02-15-preview
@@ -14,13 +15,14 @@ llm:
   # deployment_name: <azure_model_deployment_name>
   # tokens_per_minute: 150_000 # set a leaky bucket throttle
   # requests_per_minute: 10_000 # set a leaky bucket throttle
-  # max_retries: 10
+  max_retries: 3
   # max_retry_wait: 10.0
   # sleep_on_rate_limit_recommendation: true # whether to sleep when azure suggests wait-times
   # concurrent_requests: 25 # the number of parallel inflight requests that may be made
   # temperature: 0 # temperature for sampling
   # top_p: 1 # top-p sampling
   # n: 1 # Number of completions to generate
+  concurrent_requests: 1
 
 parallelization:
   stagger: 0.3
@@ -87,8 +89,8 @@ storage:
   # container_name: <azure_blob_storage_container_name>
 
 update_index_storage: # Storage to save an updated index (for incremental indexing). Enabling this performs an incremental index run
-#   type: file # or blob
-#   base_dir: "update_output"
+  # type: file # or blob
+  # base_dir: "update_output"
   # connection_string: <azure_blob_storage_connection_string>
   # container_name: <azure_blob_storage_container_name>
 

@@ -14,6 +14,34 @@ docker run --name one-api -d --restart always -p 13000:3000 -e TZ=Asia/Shanghai 
 
 本地采用ollama中转，在线api采用[阿里云-通义千问](https://bailian.console.aliyun.com/#/efm/model_experience_center/text)，主分支采用api，ollama请参见ollama分支
 
+ollama-qwen2:7b配置：
+
+```yaml
+llm:
+  api_key: ${GRAPHRAG_CHAT_API_KEY}
+  type: openai_chat # or azure_openai_chat
+  model: ${GRAPHRAG_CHAT_MODEL}
+  model_supports_json: false # recommended if this is available for your model.
+  # audience: "https://cognitiveservices.azure.com/.default"
+  batch_max_tokens: 8191
+  max_tokens: 4000
+  # request_timeout: 180.0
+  api_base: ${GRAPHRAG_API_BASE}
+  # api_version: 2024-02-15-preview
+  # organization: <organization_id>
+  # deployment_name: <azure_model_deployment_name>
+  # tokens_per_minute: 150_000 # set a leaky bucket throttle
+  # requests_per_minute: 10_000 # set a leaky bucket throttle
+  max_retries: 3
+  # max_retry_wait: 10.0
+  # sleep_on_rate_limit_recommendation: true # whether to sleep when azure suggests wait-times
+  # concurrent_requests: 25 # the number of parallel inflight requests that may be made
+  # temperature: 0 # temperature for sampling
+  # top_p: 1 # top-p sampling
+  # n: 1 # Number of completions to generate
+  concurrent_requests: 1
+```
+
 3. 环境安装，见requirements.txt
 
 ```bash
@@ -65,6 +93,24 @@ INFO:     Uvicorn running on http://0.0.0.0:8012 (Press CTRL+C to quit)
 graphrag query --root ./ --method global --query "{你的问题}"
 graphrag query --root ./ --method local --query "{你的问题}"
 graphrag query --root ./ --method drift --query "{你的问题}"
+```
+
+出现报错：`ZeroDivisionError: Weights sum to zero, can't be normalized`
+
+解决：
+
+```python
+# site-packages\graphrag\query\llm\text_utils.py
+def chunk_text(
+    text: str, max_tokens: int, token_encoder: tiktoken.Encoding | None = None
+):
+    """Chunk text by token length."""
+    if token_encoder is None:
+        token_encoder = tiktoken.get_encoding("cl100k_base")
+    tokens = token_encoder.encode(text)  # type: ignore
+    tokens = token_encoder.decode(tokens) # 将tokens解码成字符串
+    chunk_iterator = batched(iter(tokens), max_tokens)
+    yield from chunk_iterator
 ```
 
 6. 安装neo4j
