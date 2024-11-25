@@ -1,0 +1,94 @@
+
+-Goal-
+Given a text document that is potentially relevant to this activity and a list of entity types, identify all entities of those types from the text and all relationships among the identified entities.
+
+-Steps-
+1. Identify all entities. For each identified entity, extract the following information:
+- entity_name: Name of the entity, capitalized
+- entity_type: One of the following types: [character, location, artifact, ability, event]
+- entity_description: Comprehensive description of the entity's attributes and activities
+Format each entity as ("entity"{tuple_delimiter}<entity_name>{tuple_delimiter}<entity_type>{tuple_delimiter}<entity_description>)
+
+2. From the entities identified in step 1, identify all pairs of (source_entity, target_entity) that are *clearly related* to each other.
+For each pair of related entities, extract the following information:
+- source_entity: name of the source entity, as identified in step 1
+- target_entity: name of the target entity, as identified in step 1
+- relationship_description: explanation as to why you think the source entity and the target entity are related to each other
+- relationship_strength: an integer score between 1 to 10, indicating strength of the relationship between the source entity and target entity
+Format each relationship as ("relationship"{tuple_delimiter}<source_entity>{tuple_delimiter}<target_entity>{tuple_delimiter}<relationship_description>{tuple_delimiter}<relationship_strength>)
+
+3. Return output in Chinese as a single list of all the entities and relationships identified in steps 1 and 2. Use **{record_delimiter}** as the list delimiter.
+
+4. If you have to translate into Chinese, just translate the descriptions, nothing else!
+
+5. When finished, output {completion_delimiter}.
+
+-Examples-
+######################
+
+Example 1:
+
+entity_types: [character, location, artifact, ability, event]
+text:
+�父，把你的袈裟让他们见识见识！” 
+　　老和尚一听袈裟，更是得意，大笑起来，让人拿出十二只箱子，将里面的袈裟全部抖了出来，竟有上百件，而且每一件都很漂亮。悟空见了，也不言语，拿出了唐僧的袈裟抖开，顿时满屋金光四射，让人睁不开眼睛。 
+　　老和尚看呆了，一条毒计爬上心头，找了个借口，请求唐僧把袈裟借给他仔细
+------------------------
+output:
+("entity"{tuple_delimiter}悟空{tuple_delimiter}character{tuple_delimiter}孙悟空是《西游记》中的主要角色之一，他机智勇敢，拥有七十二变等神通。在这个片段中，悟空展示了唐僧的袈裟，展现了其非凡的能力和对师傅财物的保护意识)
+{record_delimiter}
+("entity"{tuple_delimiter}唐僧{tuple_delimiter}character{tuple_delimiter}唐三藏法师，在《西游记》故事里是取经团的领导者，以慈悲为怀，持戒修行。文本中提到了他的珍贵袈裟，并显示了他对佛教物品的重视）
+{record_delimiter}
+("entity"{tuple_delimiter}老和尚{tuple_delimiter}character{tuple_delimiter}在这一段落中出现的角色，展示了许多漂亮的袈裟。看到唐僧的袈裟后，心生贪念想要得到它）
+{record_delimiter}
+("entity"{tuple_delimiter}袈裟{tuple_delimiter}artifact{tuple_delimiter}佛教僧侣穿着的一种特殊服装，代表了佛教徒的身份。在此情景下，特别是唐僧的那件袈裟，展现出神奇的光芒，象征着高深佛法的力量）
+{record_delimiter}
+("relationship"{tuple_delimiter}唐僧{tuple_delimiter}袈裟{tuple_delimiter}唐僧拥有一件非常特别且光芒四射的袈裟，体现了袈裟作为佛教圣物的重要性以及与唐僧身份的紧密联系{tuple_delimiter}8)
+{record_delimiter}
+("relationship"{tuple_delimiter}悟空{tuple_delimiter}唐僧{tuple_delimiter}孙悟空是唐僧的大徒弟，负责保护唐僧安全地完成西天取经的任务，这里也包括了保护师傅的宝贵袈裟不受损害或被他人觊觎{tuple_delimiter}9)
+{record_delimiter}
+("relationship"{tuple_delimiter}老和尚{tuple_delimiter}袈裟{tuple_delimiter}老和尚首先展示了自己拥有的多件普通袈裟，但在见到唐僧的特别袈裟之后心生嫉妒，意图通过不正当手段获取这件袈裟{tuple_delimiter}7)
+{completion_delimiter}
+#############################
+
+
+Example 2:
+
+entity_types: [character, location, artifact, ability, event]
+text:
+吉菩萨呢？两人正在商量，忽见大路旁走出一位老公公，悟空连忙施礼，问道∶“请问老人家，您可知道灵吉菩萨的住处？” 
+　　老公公说∶“灵吉菩萨住在正南方的小须弥山中。”，说着手向南指，悟空顺着手指向南望去，那老公公早已化成一股清风不见了，留下一张条子，原来是太白金星暗中相助。悟空让八戒藏在树林深处等他，自己则去
+------------------------
+output:
+("entity"{tuple_delimiter}悟空{tuple_delimiter}character{tuple_delimiter}孙悟空，又称齐天大圣，是《西游记》中的主要角色之一，具有极高的武艺和变化能力）
+{record_delimiter}
+("entity"{tuple_delimiter}老公公{tuple_delimiter}character{tuple_delimiter}化身为老人出现的太白金星，为悟空指引灵吉菩萨的方向后消失）
+{record_delimiter}
+("entity"{tuple_delimiter}八戒{tuple_delimiter}character{tuple_delimiter}猪八戒，《西游记》中唐僧取经路上的弟子之一，曾是天蓬元帅，擅长使用九齿钉耙）
+{record_delimiter}
+("entity"{tuple_delimiter}灵吉菩萨{tuple_delimiter}character{tuple_delimiter}佛教中的护法神之一，在故事中住在小须弥山，被悟空寻找求助的对象）
+{record_delimiter}
+("entity"{tuple_delimiter}小须弥山{tuple_delimiter}location{tuple_delimiter}位于正南方的一座山，是灵吉菩萨的住处）
+{record_delimiter}
+("entity"{tuple_delimiter}太白金星{tuple_delimiter}character{tuple_delimiter}天上五方五老之一，暗中帮助悟空找到灵吉菩萨的位置）
+{record_delimiter}
+("relationship"{tuple_delimiter}悟空{tuple_delimiter}老公公{tuple_delimiter}悟空向老公公交谈并得到关于灵吉菩萨位置的信息{tuple_delimiter}8）
+{record_delimiter}
+("relationship"{tuple_delimiter}老公公{tuple_delimiter}太白金星{tuple_delimiter}老公公实际上是太白金星所化，目的是为了帮助悟空{tuple_delimiter}10）
+{record_delimiter}
+("relationship"{tuple_delimiter}悟空{tuple_delimiter}灵吉菩萨{tuple_delimiter}悟空正在寻找灵吉菩萨以获取帮助{tuple_delimiter}7）
+{record_delimiter}
+("relationship"{tuple_delimiter}灵吉菩萨{tuple_delimiter}小须弥山{tuple_delimiter}灵吉菩萨居住在小须弥山中{tuple_delimiter}10）
+{record_delimiter}
+("relationship"{tuple_delimiter}悟空{tuple_delimiter}八戒{tuple_delimiter}悟空让八戒藏在树林深处等他去寻找灵吉菩萨{tuple_delimiter}6）
+{completion_delimiter}
+#############################
+
+
+
+-Real Data-
+######################
+entity_types: [character, location, artifact, ability, event]
+text: {input_text}
+######################
+output:
