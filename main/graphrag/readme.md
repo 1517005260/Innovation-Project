@@ -12,7 +12,7 @@ docker run --name one-api -d --restart always -p 13000:3000 -e TZ=Asia/Shanghai 
 
 2. 大模型的选择：本地+在线api
 
-本地采用ollama中转，在线api采用[阿里云-通义千问](https://bailian.console.aliyun.com/#/efm/model_experience_center/text)
+本地采用ollama中转，在线api采用[阿里云-通义千问](https://bailian.console.aliyun.com/#/efm/model_experience_center/text)，主分支采用api，ollama请参见ollama分支
 
 3. 环境安装，见requirements.txt
 

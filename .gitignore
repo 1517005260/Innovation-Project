@@ -1,4 +1,4 @@
 /main/graphrag/data
 __pycache__/
-/.vscode/
-/.idea/
+.vscode/
+.idea/
