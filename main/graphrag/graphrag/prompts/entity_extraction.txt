@@ -5,7 +5,7 @@ Given a text document that is potentially relevant to this activity and a list o
 -Steps-
 1. Identify all entities. For each identified entity, extract the following information:
 - entity_name: Name of the entity, capitalized
-- entity_type: One of the following types: [character, location, artifact, ability, event]
+- entity_type: One of the following types: [character, location, artifact, mythical_creature, deity, event, ability]
 - entity_description: Comprehensive description of the entity's attributes and activities
 Format each entity as ("entity"{tuple_delimiter}<entity_name>{tuple_delimiter}<entity_type>{tuple_delimiter}<entity_description>)
 
@@ -28,59 +28,47 @@ Format each relationship as ("relationship"{tuple_delimiter}<source_entity>{tupl
 
 Example 1:
 
-entity_types: [character, location, artifact, ability, event]
+entity_types: [character, location, artifact, mythical_creature, deity, event, ability]
 text:
-�父，把你的袈裟让他们见识见识！” 
-　　老和尚一听袈裟，更是得意，大笑起来，让人拿出十二只箱子，将里面的袈裟全部抖了出来，竟有上百件，而且每一件都很漂亮。悟空见了，也不言语，拿出了唐僧的袈裟抖开，顿时满屋金光四射，让人睁不开眼睛。 
-　　老和尚看呆了，一条毒计爬上心头，找了个借口，请求唐僧把袈裟借给他仔细
+��空的意思。悟空急了，忍不住一个筋斗跳到云头，变成一只饿鹰扑落下来。那妖怪忽然听到头上有风声，抬头见悟空对着自己冲下来，就收起宝杖，一下扎进水里，再也不出来。 
+　　悟空没有办法，只好回来，对师父说∶“那妖怪非常狡猾，钻到水里后怎么也不出来。现在我去找观音菩萨想想办法。”悟空一个筋斗来到南海落�
 ------------------------
 output:
-("entity"{tuple_delimiter}悟空{tuple_delimiter}character{tuple_delimiter}孙悟空是《西游记》中的主要角色之一，他机智勇敢，拥有七十二变等神通。在这个片段中，悟空展示了唐僧的袈裟，展现了其非凡的能力和对师傅财物的保护意识)
+("entity"{tuple_delimiter}悟空{tuple_delimiter}character{tuple_delimiter}孙悟空，唐僧的大徒弟，拥有七十二变和筋斗云的能力，在这段文字中试图捉拿妖怪但未能成功)
 {record_delimiter}
-("entity"{tuple_delimiter}唐僧{tuple_delimiter}character{tuple_delimiter}唐三藏法师，在《西游记》故事里是取经团的领导者，以慈悲为怀，持戒修行。文本中提到了他的珍贵袈裟，并显示了他对佛教物品的重视）
+("entity"{tuple_delimiter}妖怪{tuple_delimiter}mythical_creature{tuple_delimiter}狡猾的水生妖怪，能够潜入水中躲避攻击）
 {record_delimiter}
-("entity"{tuple_delimiter}老和尚{tuple_delimiter}character{tuple_delimiter}在这一段落中出现的角色，展示了许多漂亮的袈裟。看到唐僧的袈裟后，心生贪念想要得到它）
+("entity"{tuple_delimiter}观音菩萨{tuple_delimiter}deity{tuple_delimiter}佛教中的大慈大悲观世音菩萨，经常帮助取经团队解决困难）
 {record_delimiter}
-("entity"{tuple_delimiter}袈裟{tuple_delimiter}artifact{tuple_delimiter}佛教僧侣穿着的一种特殊服装，代表了佛教徒的身份。在此情景下，特别是唐僧的那件袈裟，展现出神奇的光芒，象征着高深佛法的力量）
+("entity"{tuple_delimiter}南海{tuple_delimiter}location{tuple_delimiter}位于中国的南部海域，是观世音菩萨居住的地方之一）
 {record_delimiter}
-("relationship"{tuple_delimiter}唐僧{tuple_delimiter}袈裟{tuple_delimiter}唐僧拥有一件非常特别且光芒四射的袈裟，体现了袈裟作为佛教圣物的重要性以及与唐僧身份的紧密联系{tuple_delimiter}8)
+("relationship"{tuple_delimiter}悟空{tuple_delimiter}妖怪{tuple_delimiter}悟空尝试捕捉妖怪，但妖怪躲进了水里避免被捕{tuple_delimiter}7）
 {record_delimiter}
-("relationship"{tuple_delimiter}悟空{tuple_delimiter}唐僧{tuple_delimiter}孙悟空是唐僧的大徒弟，负责保护唐僧安全地完成西天取经的任务，这里也包括了保护师傅的宝贵袈裟不受损害或被他人觊觎{tuple_delimiter}9)
+("relationship"{tuple_delimiter}悟空{tuple_delimiter}观音菩萨{tuple_delimiter}悟空在无法对付妖怪时求助于观音菩萨{tuple_delimiter}8）
 {record_delimiter}
-("relationship"{tuple_delimiter}老和尚{tuple_delimiter}袈裟{tuple_delimiter}老和尚首先展示了自己拥有的多件普通袈裟，但在见到唐僧的特别袈裟之后心生嫉妒，意图通过不正当手段获取这件袈裟{tuple_delimiter}7)
+("relationship"{tuple_delimiter}悟空{tuple_delimiter}南海{tuple_delimiter}悟空为了寻找观音菩萨的帮助飞往南海{tuple_delimiter}6）
 {completion_delimiter}
 #############################
 
 
 Example 2:
 
-entity_types: [character, location, artifact, ability, event]
+entity_types: [character, location, artifact, mythical_creature, deity, event, ability]
 text:
-吉菩萨呢？两人正在商量，忽见大路旁走出一位老公公，悟空连忙施礼，问道∶“请问老人家，您可知道灵吉菩萨的住处？” 
-　　老公公说∶“灵吉菩萨住在正南方的小须弥山中。”，说着手向南指，悟空顺着手指向南望去，那老公公早已化成一股清风不见了，留下一张条子，原来是太白金星暗中相助。悟空让八戒藏在树林深处等他，自己则去
+ 
+　　老人让唐僧拿上包袱，牵着马，把他领到大路上来。唐僧连忙拴好马，准备感谢，抬头一看，老人已乘着一只红顶白鹤飞走了，从空中掉下一张纸条，唐僧接过一看，才知老人就是太白金星，于是赶忙向空中不停地施礼。 
+　　唐僧骑着马，沿着山路往前走，走了半天，也不见一个人。他又渴又饿，想找点水喝。忽然看
 ------------------------
 output:
-("entity"{tuple_delimiter}悟空{tuple_delimiter}character{tuple_delimiter}孙悟空，又称齐天大圣，是《西游记》中的主要角色之一，具有极高的武艺和变化能力）
+("entity"{tuple_delimiter}唐僧{tuple_delimiter}character{tuple_delimiter}唐僧是《西游记》中的主要人物之一，他是一位和尚，被派遣前往西天取经。在这个片段中，他遇到了太白金星并接受了帮助)
 {record_delimiter}
-("entity"{tuple_delimiter}老公公{tuple_delimiter}character{tuple_delimiter}化身为老人出现的太白金星，为悟空指引灵吉菩萨的方向后消失）
+("entity"{tuple_delimiter}太白金星{tuple_delimiter}deity{tuple_delimiter}太白金星是中国神话中的神仙，常以智者或帮助者的身份出现，在这个场景中，他化身为一位老人来帮助唐僧，并留下了一张纸条后飞走了)
 {record_delimiter}
-("entity"{tuple_delimiter}八戒{tuple_delimiter}character{tuple_delimiter}猪八戒，《西游记》中唐僧取经路上的弟子之一，曾是天蓬元帅，擅长使用九齿钉耙）
+("entity"{tuple_delimiter}红顶白鹤{tuple_delimiter}mythical_creature{tuple_delimiter}红顶白鹤是一种神鸟，在这里作为太白金星的坐骑出现，能够飞翔于空中并且速度极快）
 {record_delimiter}
-("entity"{tuple_delimiter}灵吉菩萨{tuple_delimiter}character{tuple_delimiter}佛教中的护法神之一，在故事中住在小须弥山，被悟空寻找求助的对象）
+("relationship"{tuple_delimiter}唐僧{tuple_delimiter}太白金星{tuple_delimiter}太白金星化身为老人帮助了唐僧，并留下了信息告知自己真实身份{tuple_delimiter}8)
 {record_delimiter}
-("entity"{tuple_delimiter}小须弥山{tuple_delimiter}location{tuple_delimiter}位于正南方的一座山，是灵吉菩萨的住处）
-{record_delimiter}
-("entity"{tuple_delimiter}太白金星{tuple_delimiter}character{tuple_delimiter}天上五方五老之一，暗中帮助悟空找到灵吉菩萨的位置）
-{record_delimiter}
-("relationship"{tuple_delimiter}悟空{tuple_delimiter}老公公{tuple_delimiter}悟空向老公公交谈并得到关于灵吉菩萨位置的信息{tuple_delimiter}8）
-{record_delimiter}
-("relationship"{tuple_delimiter}老公公{tuple_delimiter}太白金星{tuple_delimiter}老公公实际上是太白金星所化，目的是为了帮助悟空{tuple_delimiter}10）
-{record_delimiter}
-("relationship"{tuple_delimiter}悟空{tuple_delimiter}灵吉菩萨{tuple_delimiter}悟空正在寻找灵吉菩萨以获取帮助{tuple_delimiter}7）
-{record_delimiter}
-("relationship"{tuple_delimiter}灵吉菩萨{tuple_delimiter}小须弥山{tuple_delimiter}灵吉菩萨居住在小须弥山中{tuple_delimiter}10）
-{record_delimiter}
-("relationship"{tuple_delimiter}悟空{tuple_delimiter}八戒{tuple_delimiter}悟空让八戒藏在树林深处等他去寻找灵吉菩萨{tuple_delimiter}6）
+("relationship"{tuple_delimiter}太白金星{tuple_delimiter}红顶白鹤{tuple_delimiter}太白金星乘着红顶白鹤离去，表明此神鸟为其交通工具或坐骑{tuple_delimiter}7)
 {completion_delimiter}
 #############################
 
@@ -88,7 +76,7 @@ output:
 
 -Real Data-
 ######################
-entity_types: [character, location, artifact, ability, event]
+entity_types: [character, location, artifact, mythical_creature, deity, event, ability]
 text: {input_text}
 ######################
 output:
