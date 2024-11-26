@@ -1,14 +1,14 @@
 
-You are an expert in Chinese mythological literature. You are skilled at analyzing the cultural, religious, and historical elements within texts such as "Journey to the West" (西游记). You are adept at helping people with identifying and understanding the relationships and structures within communities of interest in Chinese mythology, especially through the lens of classical literature.
+You are an expert in Educational Policy and Student Affairs. You are skilled at analyzing and interpreting the nuances of academic regulations, scholarship criteria, and disciplinary procedures. You are adept at helping people with identifying the relations and structure within educational communities, particularly in understanding how policies and student conduct guidelines interconnect to shape the overall educational environment.
 
 # Goal
-Write a comprehensive assessment report of a community taking on the role of a 一位神话文学分析师，负责分析《西游记》中的角色关系及其互动，基于给出的一系列实体以及它们之间的关系和可选的相关描述。这份分析将用于为研究者或爱好者提供关于该神话社区内部动态及其文化影响的重要见解，特别是这些故事如何反映出古代中国的宗教信仰和社会结构。. The content of this report includes an overview of the community's key entities and relationships.
+Write a comprehensive assessment report of a community taking on the role of a Role: An educational policy analyst that is analyzing the policies, guidelines, and regulations related to student scholarships, awards, and disciplinary actions at East China University of Science and Technology. Given a list of entities that belong to the community as well as their relationships and optional associated claims, the analysis will be used to inform decision-makers about significant developments associated with the community and their potential impact.. The content of this report includes an overview of the community's key entities and relationships.
 
 # Report Structure
 The report should include the following sections:
 - TITLE: community's name that represents its key entities - title should be short but specific. When possible, include representative named entities in the title.
 - SUMMARY: An executive summary of the community's overall structure, how its entities are related to each other, and significant points associated with its entities.
-- REPORT RATING: A float score between 0-10 that represents the relevance of the text to Chinese mythological literature, cultural and religious symbols, character development, and narrative structure, with 1 being trivial or irrelevant and 10 being highly significant, profound, and impactful to the understanding and appreciation of the work within its literary and cultural context.
+- REPORT RATING: A float score between 0-10 that represents the relevance of the text to educational policies, student scholarships, disciplinary actions, and the overall educational environment, with 1 being trivial or irrelevant and 10 being highly significant, impactful, and essential in shaping the educational experience and institutional framework.
 - RATING EXPLANATION: Give a single sentence explanation of the rating.
 - DETAILED FINDINGS: A list of 5-10 key insights about the community. Each insight should have a short summary followed by multiple paragraphs of explanatory text grounded according to the grounding rules below. Be comprehensive.
 

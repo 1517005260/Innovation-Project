@@ -26,7 +26,7 @@ pip insatll -r requirements.txt
 4. GraphRAG构建
 - 进入graphrag文件夹中，建立文件夹`input`
 - 准备txt文件，放入input文件夹下
-- 初始化GraphRAG，`graphrag init --root ./`
+- 初始化GraphRAG，`graphrag init --root ./`（如果已经构建完成请忽略此步）
 - 进入`.env`文件修改oneapi对接的配置，`settiings.yaml`需要有多处修改，主要是修改对接openapi的模型配置和api-base的配置
 - 优化提示词，`python -m graphrag prompt-tune --config ./settings.yaml --root ./ --language Chinese --output ./prompts`
 - 索引构建，`graphrag index --root ./`，需要较长时间
@@ -69,7 +69,7 @@ graphrag query --root ./ --method drift --query "{你的问题}"
 
 6. 安装neo4j
 - 详见`docker-compose`文件以及`neo4j`文件夹，注意一定要有apoc插件，否则之后会报错
-- 直接`docker compose up`即可，neo4j的用户名和登录密码可以在`docker-compose`文件中修改
+- 直接`docker compose up -d`即可，neo4j的用户名和登录密码可以在`docker-compose`文件中修改
 - neo4j的数据会存在`./data/`下
 
 7. 知识图谱可视化
@@ -82,6 +82,12 @@ graphrag query --root ./ --method drift --query "{你的问题}"
 MATCH (n:__Entity__)
 WHERE n.name CONTAINS '唐僧'
 RETURN n LIMIT 25;
+```
+
+select *：
+
+```cypher
+MATCH (n) RETURN n;
 ```
 
 清空节点：

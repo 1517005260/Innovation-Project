@@ -5,7 +5,7 @@ Given a text document that is potentially relevant to this activity and a list o
 -Steps-
 1. Identify all entities. For each identified entity, extract the following information:
 - entity_name: Name of the entity, capitalized
-- entity_type: One of the following types: [character, location, artifact, mythical_creature, deity, event, ability]
+- entity_type: One of the following types: [university, scholarship, policy, disciplinary_action, student_affairs, political_standards, moral_standards, award_criteria, application_process, student_rights, appeal_process, financial_aid]
 - entity_description: Comprehensive description of the entity's attributes and activities
 Format each entity as ("entity"{tuple_delimiter}<entity_name>{tuple_delimiter}<entity_type>{tuple_delimiter}<entity_description>)
 
@@ -28,47 +28,60 @@ Format each relationship as ("relationship"{tuple_delimiter}<source_entity>{tupl
 
 Example 1:
 
-entity_types: [character, location, artifact, mythical_creature, deity, event, ability]
+entity_types: [university, scholarship, policy, disciplinary_action, student_affairs, political_standards, moral_standards, award_criteria, application_process, student_rights, appeal_process, financial_aid]
 text:
-��空的意思。悟空急了，忍不住一个筋斗跳到云头，变成一只饿鹰扑落下来。那妖怪忽然听到头上有风声，抬头见悟空对着自己冲下来，就收起宝杖，一下扎进水里，再也不出来。 
-　　悟空没有办法，只好回来，对师父说∶“那妖怪非常狡猾，钻到水里后怎么也不出来。现在我去找观音菩萨想想办法。”悟空一个筋斗来到南海落�
+全班同学坚持四项基本原则，拥护党的领导，坚持正确的政治方向，自觉遵守公民道德规范，严格执行国家教育部颁发的《高等学校学生行为准则》和《普通高等学校学生管理规定》，集体观念强，凝聚力强，积极参加学校、学院各项集体活动，争取集体荣誉；班委、团支部组织健全，工作计划完善，干部分工明确，以身作则，团结协作，工作主动，同学反映好
 ------------------------
 output:
-("entity"{tuple_delimiter}悟空{tuple_delimiter}character{tuple_delimiter}孙悟空，唐僧的大徒弟，拥有七十二变和筋斗云的能力，在这段文字中试图捉拿妖怪但未能成功)
+("entity"{tuple_delimiter}四项基本原则{tuple_delimiter}political_standards{tuple_delimiter}四项基本原则是中国共产党和中华人民共和国立国之本，是党我们制定路线、方针、政策的根本依据})
 {record_delimiter}
-("entity"{tuple_delimiter}妖怪{tuple_delimiter}mythical_creature{tuple_delimiter}狡猾的水生妖怪，能够潜入水中躲避攻击）
+("entity"{tuple_delimeter}党的领导{tuple_delimiter}political_standards{tuple_delimiter}中国共产党的领导是中国特色社会主义最本质的特征，它指导和支持各方面的政治活动和社会发展})
 {record_delimiter}
-("entity"{tuple_delimiter}观音菩萨{tuple_delimiter}deity{tuple_delimiter}佛教中的大慈大悲观世音菩萨，经常帮助取经团队解决困难）
+("entity"{tuple_delimiter}公民道德规范{tuple_delimiter}moral_standards{tuple_delimiter}公民应当遵守的行为规范标准，包括爱祖国、守法纪、诚实守信等方面的要求})
 {record_delimiter}
-("entity"{tuple_delimiter}南海{tuple_delimiter}location{tuple_delimiter}位于中国的南部海域，是观世音菩萨居住的地方之一）
+("entity"{tuple_delimiter}高等学校学生行为准则{tuple_delimiter}policy{tuple_delimiter}由国家教育部颁发的规定，对学生在学术诚信、尊敬师长、团结同学等方面提出具体要求和指导原则})
 {record_delimiter}
-("relationship"{tuple_delimiter}悟空{tuple_delimiter}妖怪{tuple_delimiter}悟空尝试捕捉妖怪，但妖怪躲进了水里避免被捕{tuple_delimiter}7）
+("entity"{tuple_delimiter}普通高等学校学生管理规定{tuple_delimiter}policy{tuple_delimiter}教育部门发布的关于高校学生日常生活、学习纪律等方面的管理制度和规则})
 {record_delimiter}
-("relationship"{tuple_delimiter}悟空{tuple_delimiter}观音菩萨{tuple_delimiter}悟空在无法对付妖怪时求助于观音菩萨{tuple_delimiter}8）
+("entity"{tuple_delimiter}班委{tuple_delimiter}student_affairs{tuple_delimiter}班级内部设立的学生组织机构，负责组织班级活动及维护班级秩序等事务})
 {record_delimiter}
-("relationship"{tuple_delimiter}悟空{tuple_delimiter}南海{tuple_delimiter}悟空为了寻找观音菩萨的帮助飞往南海{tuple_delimiter}6）
+("entity"{tuple_delimiter}团支部{tuple_delimiter}student_affairs{tuple_delimiter}共青团在学校中的基层组织单位，旨在加强团员的思想政治教育，促进学生成长成才})
+{record_delimiter}
+("relationship"{tuple_delimiter}四项基本原则{tuple_delimiter}党的领导{tuple_delimiter}四项基本原则中包含坚持中国共产党的领导，表明了两者之间密切的政治关联性{tuple_delimiter}9}
+{record_delimiter}
+("relationship"{tuple_delimiter}公民道德规范{tuple_delimiter}高等学校学生行为准则{tuple_delimiter}公民道德规范为《高等学校学生行为准则》提供了基础性的道德框架支持{tuple_delimiter}7}
+{record_delimiter}
+("relationship"{tuple_delimiter}高等学校学生行为准则{tuple_delimiter}普通高等学校学生管理规定{tuple_delimiter}两者均是由国家教育部出台的重要规章制度，共同构成了对学生行为的具体指导与约束机制{tuple_delimiter}8}
+{record_delimiter}
+("relationship"{tuple_delimiter}班委{tuple_delimiter}团支部{tuple_delimiter}班委和团支部分别从不同方面着手推动班级建设和学生个人发展，在实际工作中相互配合{tuple_delimiter}6}
 {completion_delimiter}
 #############################
 
 
 Example 2:
 
-entity_types: [character, location, artifact, mythical_creature, deity, event, ability]
+entity_types: [university, scholarship, policy, disciplinary_action, student_affairs, political_standards, moral_standards, award_criteria, application_process, student_rights, appeal_process, financial_aid]
 text:
- 
-　　老人让唐僧拿上包袱，牵着马，把他领到大路上来。唐僧连忙拴好马，准备感谢，抬头一看，老人已乘着一只红顶白鹤飞走了，从空中掉下一张纸条，唐僧接过一看，才知老人就是太白金星，于是赶忙向空中不停地施礼。 
-　　唐僧骑着马，沿着山路往前走，走了半天，也不见一个人。他又渴又饿，想找点水喝。忽然看
+华东理工大学本科生国家奖学金管理办法
+
+校学〔2020〕6 号
+
+第一章  总 则
+
+第一条  为激励学生勤奋学习、努力进取，德、智、体、美、劳全面发展，进一步规范本科生国家奖学金评审工作，根据《财政部 教育部 人力资源社会保障部 退役军人部 中央军委国防动员部关于印发<学生资助资金管理办法>的通知》（财科教2019〕19号）和《教育部 财政部关于�
 ------------------------
 output:
-("entity"{tuple_delimiter}唐僧{tuple_delimiter}character{tuple_delimiter}唐僧是《西游记》中的主要人物之一，他是一位和尚，被派遣前往西天取经。在这个片段中，他遇到了太白金星并接受了帮助)
+("entity"{tuple_delimiter}华东理工大学{tuple_delimiter}university{tuple_delimiter}一所位于中国的大学，负责管理本科生国家奖学金的评审工作）
 {record_delimiter}
-("entity"{tuple_delimiter}太白金星{tuple_delimiter}deity{tuple_delimiter}太白金星是中国神话中的神仙，常以智者或帮助者的身份出现，在这个场景中，他化身为一位老人来帮助唐僧，并留下了一张纸条后飞走了)
+("entity"{tuple_delimiter}国家奖学金{tuple_delimiter}scholarship{tuple_deliber}为了激励学生勤奋学习、努力进取，德、智、体、美、劳全面发展的奖励金）
 {record_delimiter}
-("entity"{tuple_delimiter}红顶白鹤{tuple_delimiter}mythical_creature{tuple_delimiter}红顶白鹤是一种神鸟，在这里作为太白金星的坐骑出现，能够飞翔于空中并且速度极快）
+("entity"{tuple_delimiter}管理办法{tuple_delimiter}policy{tuple_delimiter}规定了本科生国家奖学金的申请、评审和发放流程及标准的规章制度）
 {record_delimiter}
-("relationship"{tuple_delimiter}唐僧{tuple_delimiter}太白金星{tuple_delimiter}太白金星化身为老人帮助了唐僧，并留下了信息告知自己真实身份{tuple_delimiter}8)
+("relationship"{tuple_delimiter}华东理工大学{tuple_delimiter}国家奖学金{tuple_delimiter}华东理工大学负责管理和实施国家奖学金制度{tuple_delimiter}8)
 {record_delimiter}
-("relationship"{tuple_delimiter}太白金星{tuple_delimiter}红顶白鹤{tuple_delimiter}太白金星乘着红顶白鹤离去，表明此神鸟为其交通工具或坐骑{tuple_delimiter}7)
+("relationship"{tuple_delimiter}华东理工大学{tuple_delimiter}管理办法{tuple_delimiter}华东理工大学制定了关于国家奖学金的具体管理办法{tuple_delimiter}9)
+{record_delimiter}
+("relationship"{tuple_delimiter}国家奖学金{tuple_delimiter}管理办法{tuple_delimiter}管理办法为国家奖学金的评审提供了具体的指导原则和操作细则{tuple_delimiter}10)
 {completion_delimiter}
 #############################
 
@@ -76,7 +89,7 @@ output:
 
 -Real Data-
 ######################
-entity_types: [character, location, artifact, mythical_creature, deity, event, ability]
+entity_types: [university, scholarship, policy, disciplinary_action, student_affairs, political_standards, moral_standards, award_criteria, application_process, student_rights, appeal_process, financial_aid]
 text: {input_text}
 ######################
 output:

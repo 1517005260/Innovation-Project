@@ -7,24 +7,24 @@ headers = {"Content-Type": "application/json"}
 # 1、测试全局搜索  graphrag-global-search:latest
 global_data = {
     "model": "graphrag-global-search:latest",
-    "messages": [{"role": "user", "content": "这个故事的主题是什么?"}],
-    "temperature": 0.7,
+    "messages": [{"role": "user", "content": "华东理工大学德育分是怎么评价的？"}],
+    "temperature": 0.0,
     # "stream": True,#True or False
 }
 
 # 2、测试本地搜索  graphrag-local-search:latest
 local_data = {
     "model": "graphrag-local-search:latest",
-    "messages": [{"role": "user", "content": "谁是唐僧，他的主要关系是什么?"}],
-    "temperature": 0.7,
+    "messages": [{"role": "user", "content": "华东理工大学本科生奖学金评定的标准是什么？"}],
+    "temperature": 0.0,
     # "stream": True,#True or False
 }
 
 # 3、测试全局和本地搜索  full-model:latest
 full_data = {
     "model": "full-model:latest",
-    "messages": [{"role": "user", "content": "谁是唐僧，他的主要关系是什么?"}],
-    "temperature": 0.7,
+    "messages": [{"role": "user", "content": "华东理工大学本科生奖学金评定的标准是什么？"}],
+    "temperature": 0.0,
     # "stream": True,#True or False
 }
 
