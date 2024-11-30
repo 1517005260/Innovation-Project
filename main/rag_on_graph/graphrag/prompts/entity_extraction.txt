@@ -1,0 +1,89 @@
+
+-Goal-
+Given a text document that is potentially relevant to this activity and a list of entity types, identify all entities of those types from the text and all relationships among the identified entities.
+
+-Steps-
+1. Identify all entities. For each identified entity, extract the following information:
+- entity_name: Name of the entity, capitalized
+- entity_type: One of the following types: [disciplinary action, appeal process, scholarship criteria, scholarship administration, student conduct policy, institutional governance, student behavior, disciplinary consequences, student services, complaint mechanism]
+- entity_description: Comprehensive description of the entity's attributes and activities
+Format each entity as ("entity"{tuple_delimiter}<entity_name>{tuple_delimiter}<entity_type>{tuple_delimiter}<entity_description>)
+
+2. From the entities identified in step 1, identify all pairs of (source_entity, target_entity) that are *clearly related* to each other.
+For each pair of related entities, extract the following information:
+- source_entity: name of the source entity, as identified in step 1
+- target_entity: name of the target entity, as identified in step 1
+- relationship_description: explanation as to why you think the source entity and the target entity are related to each other
+- relationship_strength: an integer score between 1 to 10, indicating strength of the relationship between the source entity and target entity
+Format each relationship as ("relationship"{tuple_delimiter}<source_entity>{tuple_delimiter}<target_entity>{tuple_delimiter}<relationship_description>{tuple_delimiter}<relationship_strength>)
+
+3. Return output in Chinese as a single list of all the entities and relationships identified in steps 1 and 2. Use **{record_delimiter}** as the list delimiter.
+
+4. If you have to translate into Chinese, just translate the descriptions, nothing else!
+
+5. When finished, output {completion_delimiter}.
+
+-Examples-
+######################
+
+Example 1:
+
+entity_types: [disciplinary action, appeal process, scholarship criteria, scholarship administration, student conduct policy, institutional governance, student behavior, disciplinary consequences, student services, complaint mechanism]
+text:
+生在申诉期内未提出申诉的，学校不再受理其提出的申诉。
+
+第二十九条 受到开除学籍处分的学生，学校按照相关规定颁发学习证明。学生在开除学籍处分决定生效后两周内办理离校手续，档案由学校退回其家庭所在地，户口应当按照国家相关规定迁回原户籍地或者家庭户籍所在地。
+
+第五章 处分的期限
+
+第三十条 除开除学籍处分以外，纪律处分设置6到12个月的期限，警告、严重
+------------------------
+output:
+("entity"{tuple_delimiter}申诉期{tuple_delimiter}appeal process{tuple_delimiter}学生必须在规定的时间内提出申诉，否则学校将不再受理其申诉)
+{record_delimiter}
+("entity"{tuple_delimiter}开除学籍处分{tuple_delimiter}disciplinary action{tuple_delimiter}一种严重的纪律处分形式，适用于学生严重违反校规的情况；被处分的学生需领取学习证明，并在两周内完成离校手续）
+{record_delimiter}
+("entity"{tuple_delimiter}纪律处分期限{tuple_delimiter}disciplinary consequences{tuple_delimiter}除了开除学籍之外的纪律处分设定了6到12个月的有效期，包括警告、严重警告等不同程度的处分)
+{record_delimiter}
+("relationship"{tuple_delimiter}申诉期{tuple_delimiter}开除学籍处分{tuple_delimiter}如果学生未能在申诉期内对开除学籍的决定提出正式申诉，则视为接受该决定而不作进一步处理{tuple_delimiter}7)
+{record_delimiter}
+("relationship"{tuple_delimiter}开除学籍处分{tuple_delimiter}纪律处分期限{tuple_delimiter}开除学籍是一种特殊的处分，不受一般纪律处分期限的规定限制，属于更严厉且永久性的处罚措施{tuple_delimiter}8)
+{completion_delimiter}
+#############################
+
+
+Example 2:
+
+entity_types: [disciplinary action, appeal process, scholarship criteria, scholarship administration, student conduct policy, institutional governance, student behavior, disciplinary consequences, student services, complaint mechanism]
+text:
+的公示。
+
+第十条  公示无异议后，每年11月15日前，学校将评审结果报送全国学生资助管理中心。
+
+第四章  奖学金发放、管理与监督
+
+第十一条  学校于每年12月31日前将当年国家励志奖学金一次性发放给获奖学生，并将获奖情况记入学生学籍档案。
+
+第十二条  同一学年内，获得国家励志奖学金的学生可以同时获得学校优秀奖学金，奖金实行就高发放。
+
+第五章  附 则
+
+第十三条  本办法由党�
+------------------------
+output:
+("entity"{tuple_delimiter}奖学金发放、管理与监督{tuple_delimiter}scholarship administration{tuple_delimiter}学校负责每年12月31日前一次性发放国家励志奖学金给获奖学生，并记录获奖情况。)
+{record_delimiter}
+("entity"{tuple_delimiter}评审结果报送{tuple_delimiter}scholarship administration{tuple_delimiter}学校在每年11月15日前将评审结果报送至全国学生资助管理中心，前提是公示无异议。)
+{record_delimiter}
+("relationship"{tuple_delimiter}奖学金发放、管理与监督{tuple_delimiter}评审结果报送{tuple_delimiter}奖学金的管理和发放基于已经由学校上报并审核通过的结果{tuple_delimiter}8)
+{completion_delimiter}
+#############################
+
+
+
+-Real Data-
+######################
+entity_types: [disciplinary action, appeal process, scholarship criteria, scholarship administration, student conduct policy, institutional governance, student behavior, disciplinary consequences, student services, complaint mechanism]
+text: {input_text}
+######################
+output:
