@@ -10,3 +10,6 @@
  shutup
  tqdm
  pandas
+ pymupdf
+ unstructured
+ python-docx
