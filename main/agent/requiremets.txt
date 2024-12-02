@@ -13,3 +13,4 @@
  pymupdf
  unstructured
  python-docx
+ faiss-cpu==1.7.3
