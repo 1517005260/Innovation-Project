@@ -1,0 +1,12 @@
+ openai
+ tiktoken
+ python-dotenv
+ langchain==0.1.6
+ langchain-community==0.0.19
+ langchain-core==0.1.23
+ py2neo
+ chromadb
+ bs4
+ shutup
+ tqdm
+ pandas
