@@ -105,7 +105,7 @@ entity_extraction:
   ## parallelization: override the global parallelization settings for this task
   ## async_mode: override the global async_mode settings for this task
   prompt: "prompts/entity_extraction.txt"
-  entity_types: [award, amount, condition, department, duration, honor, organization, process, punishment, violation]
+  entity_types: [award, condition, department, duration, honor, organization, process, punishment, violation]
   max_gleanings: 1
 
 summarize_descriptions:
@@ -157,13 +157,13 @@ local_search:
   # conversation_history_max_turns: 5
   # top_k_mapped_entities: 10
   # top_k_relationships: 10
-  # llm_temperature: 0 # temperature for sampling
+   llm_temperature: 0 # temperature for sampling
   # llm_top_p: 1 # top-p sampling
   # llm_n: 1 # Number of completions to generate
   # max_tokens: 12000
 
 global_search:
-  # llm_temperature: 0 # temperature for sampling
+   llm_temperature: 0 # temperature for sampling
   # llm_top_p: 1 # top-p sampling
   # llm_n: 1 # Number of completions to generate
   # max_tokens: 12000
