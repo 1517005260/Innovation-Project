@@ -105,7 +105,7 @@ entity_extraction:
   ## parallelization: override the global parallelization settings for this task
   ## async_mode: override the global async_mode settings for this task
   prompt: "prompts/entity_extraction.txt"
-  entity_types: [organization,person,geo,event]
+  entity_types: [award, amount, condition, department, duration, honor, organization, process, punishment, violation]
   max_gleanings: 1
 
 summarize_descriptions:

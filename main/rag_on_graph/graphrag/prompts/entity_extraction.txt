@@ -5,7 +5,7 @@ Given a text document that is potentially relevant to this activity and a list o
 -Steps-
 1. Identify all entities. For each identified entity, extract the following information:
 - entity_name: Name of the entity, capitalized
-- entity_type: One of the following types: [disciplinary action, appeal process, scholarship criteria, scholarship administration, student conduct policy, institutional governance, student behavior, disciplinary consequences, student services, complaint mechanism]
+- entity_type: One of the following types: [student, university, regulation, disciplinary_action, committee, scholarship, employment, application_process, award, behavioral_standard]
 - entity_description: Comprehensive description of the entity's attributes and activities
 Format each entity as ("entity"{tuple_delimiter}<entity_name>{tuple_delimiter}<entity_type>{tuple_delimiter}<entity_description>)
 
@@ -28,54 +28,98 @@ Format each relationship as ("relationship"{tuple_delimiter}<source_entity>{tupl
 
 Example 1:
 
-entity_types: [disciplinary action, appeal process, scholarship criteria, scholarship administration, student conduct policy, institutional governance, student behavior, disciplinary consequences, student services, complaint mechanism]
+entity_types: [student, university, regulation, disciplinary_action, committee, scholarship, employment, application_process, award, behavioral_standard]
 text:
-生在申诉期内未提出申诉的，学校不再受理其提出的申诉。
+国家争得荣誉。非体育专业学生参加省（市）级以上体育比赛获得个人项目前三名，集体项目前二名；高水平运动员参加国际和全国性体育比赛获得个人项目前三名、集体项目前二名。集体项目应为上场主力队员。
 
-第二十九条 受到开除学籍处分的学生，学校按照相关规定颁发学习证明。学生在开除学籍处分决定生效后两周内办理离校手续，档案由学校退回其家庭所在地，户口应当按照国家相关规定迁回原户籍地或者家庭户籍所在地。
-
-第五章 处分的期限
-
-第三十条 除开除学籍处分以外，纪律处分设置6到12个月的期限，警告、严重
+6.在艺术展演方面取得显著成绩，参加全国大学生艺术展演获得一、二等奖，参加省（市）级艺术展演获得一等奖；艺术类专业学生参加国际和全国性比赛获得前三名。集体项目应
 ------------------------
 output:
-("entity"{tuple_delimiter}申诉期{tuple_delimiter}appeal process{tuple_delimiter}学生必须在规定的时间内提出申诉，否则学校将不再受理其申诉)
+("entity"{tuple_delimiter}国家争得荣誉{tuple_delimiter}award{tuple_delimiter}这是一个奖项，授予在体育或艺术领域取得突出成绩的学生}
 {record_delimiter}
-("entity"{tuple_delimiter}开除学籍处分{tuple_delimiter}disciplinary action{tuple_delimiter}一种严重的纪律处分形式，适用于学生严重违反校规的情况；被处分的学生需领取学习证明，并在两周内完成离校手续）
+("entity"{tuple_delimiter}非体育专业学生{tuple_delimiter}student{tuple_delimiter}指不主修体育专业的学生，但在体育比赛中表现出色}
 {record_delimiter}
-("entity"{tuple_delimiter}纪律处分期限{tuple_delimiter}disciplinary consequences{tuple_delimiter}除了开除学籍之外的纪律处分设定了6到12个月的有效期，包括警告、严重警告等不同程度的处分)
+("entity"{tuple_delimiter}省（市）级以上体育比赛{tuple_delimiter}regulation{tuple_delimiter}规定了非体育专业学生参加的体育比赛级别，即省级或市级以上比赛}
 {record_delimiter}
-("relationship"{tuple_delimiter}申诉期{tuple_delimiter}开除学籍处分{tuple_delimiter}如果学生未能在申诉期内对开除学籍的决定提出正式申诉，则视为接受该决定而不作进一步处理{tuple_delimiter}7)
+("entity"{tuple_delimiter}个人项目前三名{tuple_delimiter}award{tuple_delimiter}在个人项目中获得前三名的成绩}
 {record_delimiter}
-("relationship"{tuple_delimiter}开除学籍处分{tuple_delimiter}纪律处分期限{tuple_delimiter}开除学籍是一种特殊的处分，不受一般纪律处分期限的规定限制，属于更严厉且永久性的处罚措施{tuple_delimiter}8)
+("entity"{tuple_delimiter}集体项目前二名{tuple_delimiter}award{tuple_delimiter}在集体项目中获得前二名的成绩}
+{record_delimiter}
+("entity"{tuple_delimiter}高水平运动员{tuple_delimiter}student{tuple_delimiter}指具有较高运动水平的学生，参加国际和全国性比赛}
+{record_delimiter}
+("entity"{tuple_delimiter}国际和全国性体育比赛{tuple_delimiter}regulation{tuple_delimiter}规定了高水平运动员参加的比赛级别，即国际和全国性比赛}
+{record_delimiter}
+("entity"{tuple_delimiter}上场主力队员{tuple_delimiter}employment{tuple_delimiter}在集体项目中担任主要角色的队员}
+{record_delimiter}
+("entity"{tuple_delimiter}全国大学生艺术展演{tuple_delimiter}regulation{tuple_delimiter}全国范围内的大学生艺术展示活动，学生参与其中可获得奖项}
+{record_delimiter}
+("entity"{tuple_delimiter}一、二等奖{tuple_delimiter}award{tuple_delimiter}在全国大学生艺术展中获得的一等奖或二等奖}
+{record_delimiter}
+("entity"{tuple_delimiter}省（市）级艺术展演{tuple_delimiter}regulation{tuple_delimiter}省或市级的艺术展示活动，学生参与其中可获得奖项}
+{record_delimiter}
+("entity"{tuple_delimiter}一等奖{tuple_delimiter}award{tuple_delimiter}在省或市级艺术展示活动中获得的一等奖}
+{record_delimiter}
+("entity"{tuple_delimiter}艺术类专业学生{tuple_delimiter}student{tuple_delimiter}主修艺术专业的学生，参加国际和全国性比赛}
+{record_delimiter}
+("relationship"{tuple_delimiter}国家争得荣誉{tuple_delimiter}非体育专业学生{tuple_delimiter}非体育专业学生通过参加体育比赛为国家赢得荣誉{tuple_delimiter}9)
+{record_delimiter}
+("relationship"{tuple_delimiter}国家争得荣誉{tuple_delimiter}高水平运动员{tuple_delimiter}高水平运动员通过参加国际和全国性体育比赛为国家赢得荣誉{tuple_delimiter}9)
+{record_delimiter}
+("relationship"{tuple_delimiter}省（市）级以上体育比赛{tuple_delimiter}个人项目前三名{tuple_delimiter}省（市）级以上体育比赛中的个人项目前三名获奖者{tuple_delimiter}8)
+{record_delimiter}
+("relationship"{tuple_delimiter}省（市）级以上体育比赛{tuple_delimiter}集体项目前二名{tuple_delimiter}省（市）级以上体育比赛中的集体项目前二名获奖者{tuple_delimiter}8)
+{record_delimiter}
+("relationship"{tuple_delimiter}国际和全国性体育比赛{tuple_delimiter}个人项目前三名{tuple_delimiter}国际和全国性体育比赛中的个人项目前三名获奖者{tuple_delimiter}8)
+{record_delimiter}
+("relationship"{tuple_delimiter}国际和全国性体育比赛{tuple_delimiter}集体项目前二名{tuple_delimiter}国际和全国性体育比赛中的集体项目前二名获奖者{tuple_delimiter}8)
+{record_delimiter}
+("relationship"{tuple_delimiter}集体项目前二名{tuple_delimiter}上场主力队员{tuple_delimiter}集体项目的前二名获奖者必须是上场主力队员{tuple_delimiter}7)
+{record_delimiter}
+("relationship"{tuple_delimiter}全国大学生艺术展演{tuple_delimiter}一、二等奖{tuple_delimiter}全国大学生艺术展演中获得一、二等奖的获奖者{tuple_delimiter}8)
+{record_delimiter}
+("relationship"{tuple_delimiter}省（市）级艺术展演{tuple_delimiter}一等奖{tuple_delimiter}省（市）级艺术展演中获得一等奖的获奖者{tuple_delimiter}8)
+{record_delimiter}
+("relationship"{tuple_delimiter}艺术类专业学生{tuple_delimiter}国际和全国性比赛{tuple_delimiter}艺术类专业学生参加国际和全国性比赛{tuple_delimiter}7)
 {completion_delimiter}
 #############################
 
 
 Example 2:
 
-entity_types: [disciplinary action, appeal process, scholarship criteria, scholarship administration, student conduct policy, institutional governance, student behavior, disciplinary consequences, student services, complaint mechanism]
+entity_types: [student, university, regulation, disciplinary_action, committee, scholarship, employment, application_process, award, behavioral_standard]
 text:
-的公示。
+受到留校察看纪律处分，留校察看期满后再次发生违纪行为的；
 
-第十条  公示无异议后，每年11月15日前，学校将评审结果报送全国学生资助管理中心。
+（六）在群体性违纪事件中起主要作用的；
 
-第四章  奖学金发放、管理与监督
+（七）其他造成严重后果或影响恶劣，应当从重处分的情形。
 
-第十一条  学校于每年12月31日前将当年国家励志奖学金一次性发放给获奖学生，并将获奖情况记入学生学籍档案。
+第八条 纪律处分原则上不可撤销，但在申诉程序中被申诉处理委员会认定为建议予以撤销的情形除外。
 
-第十二条  同一学年内，获得国家励志奖学金的学生可以同时获得学校优秀奖学金，奖金实行就高发放。
+第三章 违纪行为和处分
 
-第五章  附 则
+    第九条 违反宪法、法律、法规的，按下列规定给予处分：
 
-第十三条  本办法由党�
+    （一）�
 ------------------------
 output:
-("entity"{tuple_delimiter}奖学金发放、管理与监督{tuple_delimiter}scholarship administration{tuple_delimiter}学校负责每年12月31日前一次性发放国家励志奖学金给获奖学生，并记录获奖情况。)
+("entity"{tuple_delimiter}留校察看{tuple_delimiter}disciplinary_action{tuple_delimiter}在学生犯错后实施的一种纪律措施，学生在特定时期内受到观察。如果在此期间再次违规，可能会受到更严厉的处罚。{tuple_delimiter}9)
 {record_delimiter}
-("entity"{tuple_delimiter}评审结果报送{tuple_delimiter}scholarship administration{tuple_delimiter}学校在每年11月15日前将评审结果报送至全国学生资助管理中心，前提是公示无异议。)
+("entity"{tuple_delimiter}申诉处理委员会{tuple_delimiter}committee{tuple_delimiter}负责审查学生的申诉并决定是否应该撤销纪律处分的委员会。{tuple_delimiter}8)
 {record_delimiter}
-("relationship"{tuple_delimiter}奖学金发放、管理与监督{tuple_delimiter}评审结果报送{tuple_delimiter}奖学金的管理和发放基于已经由学校上报并审核通过的结果{tuple_delimiter}8)
+("entity"{tuple_delimiter}群体性违纪事件{tuple_delimiter}disciplinary_action{tuple_delimiter}指多个学生共同参与的违反学校规定的事件，特别是那些在其中起到主要作用的学生将受到更严重的处罚。{tuple_delimiter}7)
+{record_delimiter}
+("entity"{tuple_delimiter}造成严重后果或影响恶劣{tuple_delimiter}disciplinary_action{tuple_delimiter}描述了当学生的违规行为导致严重后果或者影响非常负面时，应给予更严厉的纪律处分的情况。{tuple_delimiter}6)
+{record_delimiter}
+("entity"{tuple_delimiter}违反宪法、法律、法规{tuple_delimiter}regulation{tuple_delimiter}指学生的行为违反了国家的宪法、法律或法规，这类行为通常会受到学校的纪律处分。{tuple_delimiter}9)
+{record_delimiter}
+("relationship"{tuple_delimiter}留校察看{tuple_delimiter}群体性违纪事件{tuple_delimiter}留校察看是一种可能因参与群体性违纪事件而被施加的纪律处分，特别是对于在这些事件中起主要作用的学生。{tuple_delimiter}8)
+{record_delimiter}
+("relationship"{tuple_delimiter}留校察看{tuple_delimiter}造成严重后果或影响恶劣{tuple_delimiter}留校察看是对于造成严重后果或影响恶劣行为的一种可能的纪律措施，尤其是如果这些行为再次发生。{tuple_delimiter}8)
+{record_delimiter}
+("relationship"{tuple_delimiter}申诉处理委员会{tuple_delimiter}留校察看{tuple_delimiter}申诉处理委员会有权在申诉过程中审查留校察看的决定，并可能建议撤销这种纪律处分。{tuple_delimiter}9)
+{record_delimiter}
+("relationship"{tuple_delimiter}违反宪法、法律、法规{tuple_delimiter}留校察看{tuple_delimiter}违反宪法、法律、法规的行为可能导致学生受到留校察看的纪律处分。{tuple_delimiter}9)
 {completion_delimiter}
 #############################
 
@@ -83,7 +127,7 @@ output:
 
 -Real Data-
 ######################
-entity_types: [disciplinary action, appeal process, scholarship criteria, scholarship administration, student conduct policy, institutional governance, student behavior, disciplinary consequences, student services, complaint mechanism]
+entity_types: [student, university, regulation, disciplinary_action, committee, scholarship, employment, application_process, award, behavioral_standard]
 text: {input_text}
 ######################
 output:

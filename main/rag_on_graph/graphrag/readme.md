@@ -28,6 +28,7 @@ pip insatll -r requirements.txt
 - 准备txt文件，放入input文件夹下
 - 初始化GraphRAG，`graphrag init --root ./`（如果已经构建完成请忽略此步）
 - 进入`.env`文件修改oneapi对接的配置，`settiings.yaml`需要有多处修改，主要是修改对接openapi的模型配置和api-base的配置
+  - entity_types 也要针对不同文件进行修改，我这里为：`[award, amount, condition, department, duration, honor, organization, process, punishment, violation]`
 - 优化提示词，`python -m graphrag prompt-tune --config ./settings.yaml --root ./ --language Chinese --output ./prompts`
 - 索引构建，`graphrag index --root ./`，需要较长时间
 

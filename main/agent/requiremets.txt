@@ -5,7 +5,7 @@
  langchain-community==0.0.19
  langchain-core==0.1.23
  py2neo
- chromadb
+ chromadb==0.3.29
  bs4
  shutup
  tqdm
