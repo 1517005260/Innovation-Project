@@ -5,7 +5,7 @@ Given a text document that is potentially relevant to this activity and a list o
 -Steps-
 1. Identify all entities. For each identified entity, extract the following information:
 - entity_name: Name of the entity, capitalized
-- entity_type: One of the following types: [student, university, regulation, disciplinary_action, committee, scholarship, employment, application_process, award, behavioral_standard]
+- entity_type: One of the following types: [student, university, regulation, scholarship, disciplinary_action, employment, region, application_process]
 - entity_description: Comprehensive description of the entity's attributes and activities
 Format each entity as ("entity"{tuple_delimiter}<entity_name>{tuple_delimiter}<entity_type>{tuple_delimiter}<entity_description>)
 
@@ -28,98 +28,85 @@ Format each relationship as ("relationship"{tuple_delimiter}<source_entity>{tupl
 
 Example 1:
 
-entity_types: [student, university, regulation, disciplinary_action, committee, scholarship, employment, application_process, award, behavioral_standard]
+entity_types: [student, university, regulation, scholarship, disciplinary_action, employment, region, application_process]
 text:
-国家争得荣誉。非体育专业学生参加省（市）级以上体育比赛获得个人项目前三名，集体项目前二名；高水平运动员参加国际和全国性体育比赛获得个人项目前三名、集体项目前二名。集体项目应为上场主力队员。
+校纪校规遵守情况。   -20～0分   根据无故旷课、宿舍有无使用违章电器情况等情况确定相应减分标准。其中发现一次使用违章电器，德育学分作不及格处理，第二次发现，使用者本人给予严重警告。
 
-6.在艺术展演方面取得显著成绩，参加全国大学生艺术展演获得一、二等奖，参加省（市）级艺术展演获得一等奖；艺术类专业学生参加国际和全国性比赛获得前三名。集体项目应
+诚实守信   考试诚信、交费诚信、借贷诚信、交往诚信等。   -20～0分   根据不诚信记录及不诚信所造成的不良影响程度确定相应减分标准。
+
+履行责任   寝室卫生责任
 ------------------------
 output:
-("entity"{tuple_delimiter}国家争得荣誉{tuple_delimiter}award{tuple_delimiter}这是一个奖项，授予在体育或艺术领域取得突出成绩的学生}
+("entity"{tuple_delimiter}校纪校规遵守情况{tuple_delimiter}regulation{tuple_delimiter}根据无故旷课、宿舍有无使用违章电器情况等情况确定相应减分标准。其中发现一次使用违章电器，德育学分作不及格处理，第二次发现，使用者本人给予严重警告。)
 {record_delimiter}
-("entity"{tuple_delimiter}非体育专业学生{tuple_delimiter}student{tuple_delimiter}指不主修体育专业的学生，但在体育比赛中表现出色}
+("entity"{tuple_delimiter}无故旷课{tuple_delimiter}disciplinary_action{tuple_delimiter}学生无正当理由缺席课程，可能导致德育学分减少。)
 {record_delimiter}
-("entity"{tuple_delimiter}省（市）级以上体育比赛{tuple_delimiter}regulation{tuple_delimiter}规定了非体育专业学生参加的体育比赛级别，即省级或市级以上比赛}
+("entity"{tuple_delimiter}使用违章电器{tuple_delimiter}disciplinary_action{tuple_delimiter}在宿舍使用违规电器，第一次发现德育学分不及格，第二次发现给予严重警告。)
 {record_delimiter}
-("entity"{tuple_delimiter}个人项目前三名{tuple_delimiter}award{tuple_delimiter}在个人项目中获得前三名的成绩}
+("entity"{tuple_delimiter}严重警告{tuple_delimiter}disciplinary_action{tuple_delimiter}对违规行为的处罚，如再次发现使用违章电器将给予此处分。)
 {record_delimiter}
-("entity"{tuple_delimiter}集体项目前二名{tuple_delimiter}award{tuple_delimiter}在集体项目中获得前二名的成绩}
+("entity"{tuple_delimiter}德育学分{tuple_delimiter}regulation{tuple_delimiter}学生的道德教育分数，受到校纪校规遵守情况的影响。)
 {record_delimiter}
-("entity"{tuple_delimiter}高水平运动员{tuple_delimiter}student{tuple_delimiter}指具有较高运动水平的学生，参加国际和全国性比赛}
+("entity"{tuple_delimiter}考试诚信{tuple_delimiter}honesty{tuple_delimiter}考试中的诚信行为，如作弊等不诚信行为会影响德育学分。)
 {record_delimiter}
-("entity"{tuple_delimiter}国际和全国性体育比赛{tuple_delimiter}regulation{tuple_delimiter}规定了高水平运动员参加的比赛级别，即国际和全国性比赛}
+("entity"{tuple_delimiter}交费诚信{tuple_delimiter}honesty{tuple_delimiter}按时缴纳学费和其他费用的诚信行为，不诚信行为会减少德育学分。)
 {record_delimiter}
-("entity"{tuple_delimiter}上场主力队员{tuple_delimiter}employment{tuple_delimiter}在集体项目中担任主要角色的队员}
+("entity"{tuple_delimiter}借贷诚信{tuple_delimiter}honesty{tuple_delimiter}借款和还款的诚信行为，不诚信行为会减少德育学分。)
 {record_delimiter}
-("entity"{tuple_delimiter}全国大学生艺术展演{tuple_delimiter}regulation{tuple_delimiter}全国范围内的大学生艺术展示活动，学生参与其中可获得奖项}
+("entity"{tuple_delimiter}交往诚信{tuple_delimiter}honesty{tuple_delimiter}与他人交往时的诚信行为，不诚信行为会减少德育学分。)
 {record_delimiter}
-("entity"{tuple_delimiter}一、二等奖{tuple_delimiter}award{tuple_delimiter}在全国大学生艺术展中获得的一等奖或二等奖}
+("entity"{tuple_delimiter}寝室卫生责任{tuple_delimiter}responsibility{tuple_delimiter}学生负责保持宿舍卫生的责任，不履行可能导致德育学分减少。)
 {record_delimiter}
-("entity"{tuple_delimiter}省（市）级艺术展演{tuple_delimiter}regulation{tuple_delimiter}省或市级的艺术展示活动，学生参与其中可获得奖项}
+("relationship"{tuple_delimiter}校纪校规遵守情况{tuple_delimiter}无故旷课{tuple_delimiter}校纪校规中规定了无故旷课会导致德育学分减少的标准。{tuple_delimiter}8)
 {record_delimiter}
-("entity"{tuple_delimiter}一等奖{tuple_delimiter}award{tuple_delimiter}在省或市级艺术展示活动中获得的一等奖}
+("relationship"{tuple_delimiter}校纪校规遵守情况{tuple_delimiter}使用违章电器{tuple_delimiter}校纪校规中详细规定了使用违章电器的处罚措施。{tuple_delimiter}9)
 {record_delimiter}
-("entity"{tuple_delimiter}艺术类专业学生{tuple_delimiter}student{tuple_delimiter}主修艺术专业的学生，参加国际和全国性比赛}
+("relationship"{tuple_delimiter}使用违章电器{tuple_delimiter}严重警告{tuple_delimiter}使用违章电器的行为可能最终导致严重警告的纪律处分。{tuple_delimiter}9)
 {record_delimiter}
-("relationship"{tuple_delimiter}国家争得荣誉{tuple_delimiter}非体育专业学生{tuple_delimiter}非体育专业学生通过参加体育比赛为国家赢得荣誉{tuple_delimiter}9)
+("relationship"{tuple_delimiter}德育学分{tuple_delimiter}考试诚信{tuple_delimiter}考试诚信直接影响德育学分，不诚信行为会导致减分。{tuple_delimiter}8)
 {record_delimiter}
-("relationship"{tuple_delimiter}国家争得荣誉{tuple_delimiter}高水平运动员{tuple_delimiter}高水平运动员通过参加国际和全国性体育比赛为国家赢得荣誉{tuple_delimiter}9)
+("relationship"{tuple_delimiter}德育学分{tuple_delimiter}交费诚信{tuple_delimiter}交费诚信同样影响德育学分，不诚信行为会导致减分。{tuple_delimiter}8)
 {record_delimiter}
-("relationship"{tuple_delimiter}省（市）级以上体育比赛{tuple_delimiter}个人项目前三名{tuple_delimiter}省（市）级以上体育比赛中的个人项目前三名获奖者{tuple_delimiter}8)
+("relationship"{tuple_delimiter}德育学分{tuple_delimiter}借贷诚信{tuple_delimiter}借贷诚信影响德育学分，不诚信行为会导致减分。{tuple_delimiter}8)
 {record_delimiter}
-("relationship"{tuple_delimiter}省（市）级以上体育比赛{tuple_delimiter}集体项目前二名{tuple_delimiter}省（市）级以上体育比赛中的集体项目前二名获奖者{tuple_delimiter}8)
+("relationship"{tuple_delimiter}德育学分{tuple_delimiter}交往诚信{tuple_delimiter}交往诚信影响德育学分，不诚信行为会导致减分。{tuple_delimiter}8)
 {record_delimiter}
-("relationship"{tuple_delimiter}国际和全国性体育比赛{tuple_delimiter}个人项目前三名{tuple_delimiter}国际和全国性体育比赛中的个人项目前三名获奖者{tuple_delimiter}8)
-{record_delimiter}
-("relationship"{tuple_delimiter}国际和全国性体育比赛{tuple_delimiter}集体项目前二名{tuple_delimiter}国际和全国性体育比赛中的集体项目前二名获奖者{tuple_delimiter}8)
-{record_delimiter}
-("relationship"{tuple_delimiter}集体项目前二名{tuple_delimiter}上场主力队员{tuple_delimiter}集体项目的前二名获奖者必须是上场主力队员{tuple_delimiter}7)
-{record_delimiter}
-("relationship"{tuple_delimiter}全国大学生艺术展演{tuple_delimiter}一、二等奖{tuple_delimiter}全国大学生艺术展演中获得一、二等奖的获奖者{tuple_delimiter}8)
-{record_delimiter}
-("relationship"{tuple_delimiter}省（市）级艺术展演{tuple_delimiter}一等奖{tuple_delimiter}省（市）级艺术展演中获得一等奖的获奖者{tuple_delimiter}8)
-{record_delimiter}
-("relationship"{tuple_delimiter}艺术类专业学生{tuple_delimiter}国际和全国性比赛{tuple_delimiter}艺术类专业学生参加国际和全国性比赛{tuple_delimiter}7)
+("relationship"{tuple_delimiter}德育学分{tuple_delimiter}寝室卫生责任{tuple_delimiter}履行寝室卫生责任是保持德育学分的重要因素。{tuple_delimiter}8)
 {completion_delimiter}
 #############################
 
 
 Example 2:
 
-entity_types: [student, university, regulation, disciplinary_action, committee, scholarship, employment, application_process, award, behavioral_standard]
+entity_types: [student, university, regulation, scholarship, disciplinary_action, employment, region, application_process]
 text:
-受到留校察看纪律处分，留校察看期满后再次发生违纪行为的；
+国家争得荣誉。非体育专业学生参加省（市）级以上体育比赛获得个人项目前三名，集体项目前二名；高水平运动员参加国际和全国性体育比赛获得个人项目前三名、集体项目前二名。集体项目应为上场主力队员。
 
-（六）在群体性违纪事件中起主要作用的；
-
-（七）其他造成严重后果或影响恶劣，应当从重处分的情形。
-
-第八条 纪律处分原则上不可撤销，但在申诉程序中被申诉处理委员会认定为建议予以撤销的情形除外。
-
-第三章 违纪行为和处分
-
-    第九条 违反宪法、法律、法规的，按下列规定给予处分：
-
-    （一）�
+6.在艺术展演方面取得显著成绩，参加全国大学生艺术展演获得一、二等奖，参加省（市）级艺术展演获得一等奖；艺术类专业学生参加国际和全国性比赛获得前三名。集体项目应
 ------------------------
 output:
-("entity"{tuple_delimiter}留校察看{tuple_delimiter}disciplinary_action{tuple_delimiter}在学生犯错后实施的一种纪律措施，学生在特定时期内受到观察。如果在此期间再次违规，可能会受到更严厉的处罚。{tuple_delimiter}9)
+("entity"{tuple_delimiter}非体育专业学生{tuple_delimiter}student{tuple_delimiter}非体育专业的学生参加省级以上体育比赛获得个人项目前三名或集体项目前二名的成绩}
 {record_delimiter}
-("entity"{tuple_delimiter}申诉处理委员会{tuple_delimiter}committee{tuple_delimiter}负责审查学生的申诉并决定是否应该撤销纪律处分的委员会。{tuple_delimiter}8)
+("entity"{tuple_delimiter}省（市）级以上体育比赛{tuple_delimiter}regulation{tuple_delimiter}规定非体育专业学生参加的体育比赛，要求至少达到省级或市级水平}
 {record_delimiter}
-("entity"{tuple_delimiter}群体性违纪事件{tuple_delimiter}disciplinary_action{tuple_delimiter}指多个学生共同参与的违反学校规定的事件，特别是那些在其中起到主要作用的学生将受到更严重的处罚。{tuple_delimiter}7)
+("entity"{tuple_delimiter}国家争得荣誉{tuple_delimiter}regulation{tuple_delimiter}国家层面的竞争，要求学生在比赛中为国家赢得荣誉}
 {record_delimiter}
-("entity"{tuple_delimiter}造成严重后果或影响恶劣{tuple_delimiter}disciplinary_action{tuple_delimiter}描述了当学生的违规行为导致严重后果或者影响非常负面时，应给予更严厉的纪律处分的情况。{tuple_delimiter}6)
+("entity"{tuple_delimiter}高水平运动员{tuple_delimiter}student{tuple_delimiter}高水平运动员参加国际和全国性体育比赛获得个人项目前三名或集体项目前二名的成绩}
 {record_delimiter}
-("entity"{tuple_delimiter}违反宪法、法律、法规{tuple_delimiter}regulation{tuple_delimiter}指学生的行为违反了国家的宪法、法律或法规，这类行为通常会受到学校的纪律处分。{tuple_delimiter}9)
+("entity"{tuple_delimiter}国际和全国性体育比赛{tuple_delimiter}regulation{tuple_delimiter}规定高水平运动员参加的比赛必须是国际或全国性的}
 {record_delimiter}
-("relationship"{tuple_delimiter}留校察看{tuple_delimiter}群体性违纪事件{tuple_delimiter}留校察看是一种可能因参与群体性违纪事件而被施加的纪律处分，特别是对于在这些事件中起主要作用的学生。{tuple_delimiter}8)
+("entity"{tuple_delimiter}全国大学生艺术展演{tuple_delimiter}regulation{tuple_delimiter}规定艺术类专业学生参加的全国大学生艺术展演，要求获得一、二等奖}
 {record_delimiter}
-("relationship"{tuple_delimiter}留校察看{tuple_delimiter}造成严重后果或影响恶劣{tuple_delimiter}留校察看是对于造成严重后果或影响恶劣行为的一种可能的纪律措施，尤其是如果这些行为再次发生。{tuple_delimiter}8)
+("entity"{tuple_delimiter}省（市）级艺术展演{tuple_delimiter}regulation{tuple_delimiter}规定非艺术类专业学生参加的省级艺术展演，要求获得一等奖}
 {record_delimiter}
-("relationship"{tuple_delimiter}申诉处理委员会{tuple_delimiter}留校察看{tuple_delimiter}申诉处理委员会有权在申诉过程中审查留校察看的决定，并可能建议撤销这种纪律处分。{tuple_delimiter}9)
+("entity"{tuple_delimiter}艺术类专业学生{tuple_delimiter}student{tuple_delimiter}艺术类专业学生参加国际和全国性比赛获得前三名的成绩}
 {record_delimiter}
-("relationship"{tuple_delimiter}违反宪法、法律、法规{tuple_delimiter}留校察看{tuple_delimiter}违反宪法、法律、法规的行为可能导致学生受到留校察看的纪律处分。{tuple_delimiter}9)
+("relationship"{tuple_delimiter}非体育专业学生{tuple_delimiter}省（市）级以上体育比赛{tuple_delimiter}非体育专业学生需参加省（市）级以上体育比赛以获得资格{tuple_delimiter}8)
+{record_delimiter}
+("relationship"{tuple_delimiter}高水平运动员{tuple_delimiter}国际和全国性体育比赛{tuple_delimiter}高水平运动员需参加国际和全国性体育比赛以获得资格{tuple_delimiter}8)
+{record_delimiter}
+("relationship"{tuple_delimiter}艺术类专业学生{tuple_delimiter}全国大学生艺术展演{tuple_delimiter}艺术类专业学生需参加全国大学生艺术展演并获得奖项{tuple_delimiter}8)
+{record_delimiter}
 {completion_delimiter}
 #############################
 
@@ -127,7 +114,7 @@ output:
 
 -Real Data-
 ######################
-entity_types: [student, university, regulation, disciplinary_action, committee, scholarship, employment, application_process, award, behavioral_standard]
+entity_types: [student, university, regulation, scholarship, disciplinary_action, employment, region, application_process]
 text: {input_text}
 ######################
 output:

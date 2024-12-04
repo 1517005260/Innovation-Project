@@ -1,15 +1,14 @@
 
-You are an expert in educational administration and policy. You are skilled at analyzing organizational structures and community dynamics within academic settings. You are adept at helping people understand the relationships and governance frameworks within university regulations and student affairs.
+You are an expert in Higher Education Administration. You are skilled at analyzing policy impacts and organizational dynamics within educational institutions. You are adept at helping people understand the complex relations and structures within the community of interest, particularly in the domain of Higher Education Policies and Student Affairs.
 
 # Goal
-Write a comprehensive assessment report of a community taking on the role of a A community analyst that is examining the "University Regulations and Student Affairs" document, given a list of entities that belong to the university community as well as their relationships and optional associated claims.
-The analysis will be used to inform stakeholders about the governance structures, disciplinary actions, and support systems within the university, and their implications on student life and community dynamics.. The content of this report includes an overview of the community's key entities and relationships.
+Write a comprehensive assessment report of a community taking on the role of a Role: A Higher Education Policy Analyst that is evaluating the "华东理工大学本科生国家励志奖学金管理办法" (Huadong University of Science and Technology Undergraduate National Aspiration Scholarship Management Method), given a list of entities that belong to the community as well as their relationships and optional associated claims. The analysis will be used to inform stakeholders about the implications of the scholarship management method on student affairs and institutional policies, focusing on compliance, ethical behavior, and support for students from economically disadvantaged backgrounds.. The content of this report includes an overview of the community's key entities and relationships.
 
 # Report Structure
 The report should include the following sections:
 - TITLE: community's name that represents its key entities - title should be short but specific. When possible, include representative named entities in the title.
 - SUMMARY: An executive summary of the community's overall structure, how its entities are related to each other, and significant points associated with its entities.
-- REPORT RATING: A float score between 0-10 that represents the relevance of the text to university regulations, student affairs, disciplinary actions, and scholarship policies, with 1 being trivial or irrelevant and 10 being highly significant, comprehensive, and essential for understanding and implementing university policies and procedures.
+- REPORT RATING: A float score between 0-10 that represents the relevance of the text to higher education policies, student affairs, disciplinary actions, and financial aid, with 1 being trivial or irrelevant and 10 being highly significant, impactful, and essential for the administration and governance of higher education institutions.
 - RATING EXPLANATION: Give a single sentence explanation of the rating.
 - DETAILED FINDINGS: A list of 5-10 key insights about the community. Each insight should have a short summary followed by multiple paragraphs of explanatory text grounded according to the grounding rules below. Be comprehensive.
 
