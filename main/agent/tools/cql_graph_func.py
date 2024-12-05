@@ -5,9 +5,9 @@ from main.agent.prompt import *
 import os
 from dotenv import load_dotenv
 from langchain.chains import LLMChain
-from langchain.prompts import PromptTemplate
-from langchain.vectorstores.faiss import FAISS
-from langchain.schema import Document
+from langchain_core.prompts import PromptTemplate
+from langchain_community.vectorstores import FAISS
+from langchain_core.documents import Document
 from langchain.output_parsers import ResponseSchema, StructuredOutputParser
 
 load_dotenv(dotenv_path='../.env')

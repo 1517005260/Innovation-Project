@@ -4,14 +4,13 @@ from prompt import *
 from tools import cql_graph_func
 
 import os
+from langchain_core.prompts import PromptTemplate
+from langchain_core.documents import Document
 from langchain.chains import LLMChain, LLMRequestsChain
-from langchain.prompts import PromptTemplate
-from langchain.vectorstores.chroma import Chroma
-from langchain.vectorstores.faiss import FAISS
-from langchain.schema import Document
 from langchain.agents import ZeroShotAgent, AgentExecutor, Tool
 from langchain.memory import ConversationBufferMemory
 from langchain.output_parsers import ResponseSchema, StructuredOutputParser
+from langchain_community.vectorstores import Chroma, FAISS
 
 
 class Agent:

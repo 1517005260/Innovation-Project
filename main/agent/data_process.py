@@ -1,9 +1,9 @@
 from utils import *
 import os
 from glob import glob  # 遍历文件夹下的所有文件
-from langchain.vectorstores.chroma import Chroma
-from langchain.document_loaders import CSVLoader, PyMuPDFLoader, TextLoader, UnstructuredWordDocumentLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.vectorstores import Chroma
+from langchain_community.document_loaders import CSVLoader, PyMuPDFLoader, TextLoader, UnstructuredWordDocumentLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 
 def doc2vec():

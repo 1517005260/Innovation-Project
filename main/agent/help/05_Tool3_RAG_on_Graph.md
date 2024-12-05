@@ -395,7 +395,6 @@ def graph_func(self, query):
 
 由于本方法太长，已拆分至tools包下[cql_graph_func](../tools/cql_graph_func.py)。
 
-## LangChain解决方案
+## GraphRAG解决方案
 
-填充CQL模板的方案效果可能不是很好，这里我们让大模型自己生成CQL语句去查询数据库：
-
+详细步骤见[此文件](../../rag_on_graph/graphrag/utils/langchain+llamaindex.ipynb)
