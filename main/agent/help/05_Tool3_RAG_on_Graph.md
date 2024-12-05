@@ -395,6 +395,12 @@ def graph_func(self, query):
 
 由于本方法太长，已拆分至tools包下[cql_graph_func](../tools/cql_graph_func.py)。
 
-## GraphRAG解决方案
+## GraphRAG解决方案 - 推荐
 
 详细步骤见[此文件](../../rag_on_graph/graphrag/utils/langchain+llamaindex.ipynb)
+
+用graphrag生成的图谱，源文件详见graphrag/inputs
+
+在graphrag生成知识图谱后，我们导入图到neo4j中，然后先执行tools/embed_graph.py文件为知识图谱进行嵌入。
+
+tools包里还提供了local_search和global_search两种图搜索方法，agent.py中直接调用即可。

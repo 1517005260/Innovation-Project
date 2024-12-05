@@ -1,7 +1,7 @@
 from utils import *
 from config import *
 from prompt import *
-from tools import cql_graph_func
+from tools import cql_graph_func, local_search, global_search
 
 import os
 from langchain_core.prompts import PromptTemplate
@@ -50,10 +50,19 @@ class Agent:
     def graph_func(self, query):
         return cql_graph_func.cql_func(query)
 
+    def graph_local_search(self, query):
+        engine = local_search.setup_search_engine()
+        return engine.query(query)
+
+    def graph_global_search(self, query):
+        return global_search.global_retriever(query,level=2)
+
 
 if __name__ == '__main__':
     agent = Agent()
     # print(agent.generic_func("你是谁？"))
     # print(agent.retrival_func('优秀学生申请条件？'))
     # print(agent.retrival_func('应该怎么联系教务处领导？'))
-    print(agent.graph_func('优秀学生怎么申请'))
+    # print(agent.graph_func('优秀学生怎么申请'))
+    # print(agent.graph_local_search("国家奖学金的申请条件？"))
+    print(agent.graph_global_search("国家奖学金的申请条件？"))
