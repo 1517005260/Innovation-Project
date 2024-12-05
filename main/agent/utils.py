@@ -18,6 +18,7 @@ def get_llm_model():
         model=os.getenv('OPENAI_LLM_MODEL'),
         temperature=os.getenv('TEMPERATURE'),
         max_tokens=os.getenv('MAX_TOKENS'),
+        model_kwargs={"stop": ["\n    Observation"]},
     )
     return model
 

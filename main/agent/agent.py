@@ -169,5 +169,5 @@ if __name__ == '__main__':
 
     # 连续对话测试
     print(agent.query("国家奖学金的申请条件是什么？"))
-    print(agent.query("这些条件中，成绩要求具体是多少？"))
+    print(agent.query("这些条件中，成绩的具体要求是多少？"))
     print(agent.query("如果我成绩没有达到前10%，还有机会申请吗？"))
