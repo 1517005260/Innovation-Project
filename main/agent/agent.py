@@ -68,7 +68,9 @@ class Agent:
         )
         inputs = {
             'query': query,
-            'url': 'https://www.google.com/search?q=' + query.replace(' ', '+')
+            # 'url': 'https://www.google.com/search?q=' + query.replace(' ', '+'),  # google搜索
+            # 'url': 'https://www.so.com/s?q=' + query.replace(' ', '+'),   # 360 搜索，免翻墙
+            'url': 'https://www.bing.com/search?q=' + query.replace(' ', '+'), # bing 搜索
         }
         return llm_request_chain.invoke(inputs)['output']
 
@@ -101,7 +103,7 @@ class Agent:
             ),
         ]
 
-        prompt = hub.pull('hwchase17/react-chat')
+        prompt = PromptTemplate.from_template(REACT_CHAT_PROMPT_TPL)
         prompt.template = '请用中文回答问题！Final Answer 必须尊重 Obversion 的结果，不能改变语义。\n\n' + prompt.template  # 拼一段中文
         llm_agent = create_react_agent(llm=get_llm_model(), tools=tools, prompt=prompt)
         memory = ConversationBufferMemory(memory_key='chat_history')
@@ -126,9 +128,9 @@ if __name__ == '__main__':
     # print(agent.graph_global_search("国家奖学金的申请条件？"))
     # print(agent.google_search("双城之战2的主角是谁？"))
     # print(agent.query('你好，你是谁？'))
-    print(agent.query('优秀学生的申请条件？'))
+    # print(agent.query('优秀学生的申请条件？'))
     # print(agent.query('国家奖学金的申请条件？'))
-    # print(agent.query('Taylor Swift最近有什么动态？'))
+    print(agent.query('周杰伦最近有什么动态？'))
 
     # 连续对话测试
     # print(agent.query("国家奖学金的申请条件是什么？"))

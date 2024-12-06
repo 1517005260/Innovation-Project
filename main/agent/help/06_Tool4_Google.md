@@ -30,9 +30,11 @@ def google_search(self, query):
         requests_key='query_result'
     )
     inputs = {
-        'query': query,
-        'url': 'https://www.google.com/search?q=' + query.replace(' ', '+')
-    }
+            'query': query,
+            # 'url': 'https://www.google.com/search?q=' + query.replace(' ', '+'),  # google搜索
+            # 'url': 'https://www.so.com/s?q=' + query.replace(' ', '+'),   # 360 搜索，免翻墙
+            'url': 'https://www.bing.com/search?q=' + query.replace(' ', '+'), # bing 搜索
+        }
     return llm_request_chain.run(inputs)
 ```
 
