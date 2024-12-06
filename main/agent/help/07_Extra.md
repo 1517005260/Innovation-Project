@@ -64,29 +64,16 @@ app.py:
 import gradio as gr
 from message_process import Service
 import shutup
-
 shutup.please()
 
 
 def bot(message, history):
     service = Service()
-    # 获取助手的回复
-    response = service.answer(message, history)
-    # 将当前对话加入历史
-    return history + [(message, response)]
+    return service.answer(message, history)
 
 
-# 自定义主题
-theme = gr.themes.Default(
-    spacing_size="sm",
-    radius_size="sm",
-    text_size="md",
-    font=["'Helvetica Neue'", "sans-serif"]
-)
-
-# 自定义样式
-css = """
-.container {
+css = '''
+.gradio-container {
     max-width: 850px !important;
     margin: 20px auto !important;
 }
@@ -94,16 +81,23 @@ css = """
     padding: 10px !important;
     font-size: 14px !important;
 }
-"""
+.examples-row {
+    margin-top: 10px !important;
+}
+'''
 
-with gr.Blocks(theme=theme, css=css) as demo:
+with gr.Blocks(theme=gr.themes.Default(
+        spacing_size="sm",
+        radius_size="sm",
+        text_size="md",
+        font=["'Helvetica Neue'", "sans-serif"]
+)) as demo:
     gr.Markdown("# 华东理工大学政务问答小助手")
 
     chatbot = gr.Chatbot(
         height=400,
         bubble_full_width=False,
-        show_label=False,
-        container=True
+        show_label=False
     )
 
     with gr.Row():
@@ -113,46 +107,60 @@ with gr.Blocks(theme=theme, css=css) as demo:
             scale=7,
             show_label=False
         )
-        submit_btn = gr.Button("提交", variant="primary")
+        submit_btn = gr.Button("发送", variant="primary", scale=1)
+        clear_btn = gr.Button("清空", scale=1)
 
-    with gr.Row():
-        clear_btn = gr.Button("清空记录")
+    with gr.Row(elem_classes="examples-row"):
+        gr.Examples(
+            examples=[
+                "你好，你是谁？",
+                "优秀学生的申请条件是什么?",
+                "国家奖学金的申请标准是什么?",
+                "旷课会有什么处罚?"
+            ],
+            inputs=txt
+        )
 
-    examples = [
-        "你好，你是谁？",
-        "优秀学生的申请条件是什么?",
-        "国家奖学金的申请标准是什么?",
-        "旷课会有什么处罚?"
-    ]
-    gr.Examples(
-        examples=examples,
-        inputs=txt
-    )
 
-    # 设置事件处理
+    def user_input(message, history):
+        return "", history + [(message, None)]
+
+
+    def bot_response(history):
+        if not history or history[-1][1] is not None:
+            return history
+
+        message = history[-1][0]
+        service = Service()
+        response = service.answer(message, history[:-1])
+        history[-1] = (message, response)
+        return history
+
+
     submit_btn.click(
-        fn=bot,
-        inputs=[txt, chatbot],
-        outputs=chatbot,
-        api_name="predict"
+        user_input,
+        [txt, chatbot],
+        [txt, chatbot],
+        queue=False
     ).then(
-        fn=lambda: "",
-        outputs=txt
+        bot_response,
+        chatbot,
+        chatbot
     )
 
-    # 清空按钮将历史设置为空列表
-    clear_btn.click(lambda: [], None, chatbot, queue=False)
-
-    # 支持回车发送
     txt.submit(
-        fn=bot,
-        inputs=[txt, chatbot],
-        outputs=chatbot
+        user_input,
+        [txt, chatbot],
+        [txt, chatbot],
+        queue=False
     ).then(
-        fn=lambda: "",
-        outputs=txt
+        bot_response,
+        chatbot,
+        chatbot
     )
+
+    clear_btn.click(lambda: None, None, chatbot, queue=False)
 
 if __name__ == "__main__":
-    demo.launch(share=True)
+    demo.launch()
 ```

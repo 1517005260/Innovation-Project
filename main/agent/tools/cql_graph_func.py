@@ -97,4 +97,4 @@ def cql_func(query):
         'query': query,
         'query_result': '\n\n'.join(query_result) if len(query_result) else '没有查到'
     }
-    return graph_chain.run(inputs)
+    return graph_chain.invoke(inputs)['text']

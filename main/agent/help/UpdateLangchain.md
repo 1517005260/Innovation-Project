@@ -58,3 +58,5 @@ from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
 from langchain.output_parsers import ResponseSchema, StructuredOutputParser
 ```
+
+将所有的`llm_chain.run(query)`改为`llm_chain.invoke(query)['text]`，注意搜索的request_chain是`['output']`

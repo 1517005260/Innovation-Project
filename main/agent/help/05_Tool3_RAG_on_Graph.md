@@ -404,3 +404,5 @@ def graph_func(self, query):
 在graphrag生成知识图谱后，我们导入图到neo4j中，然后先执行tools/embed_graph.py文件为知识图谱进行嵌入。
 
 tools包里还提供了local_search和global_search两种图搜索方法，agent.py中直接调用即可。
+
+由于global search速度过于慢，这里已经在agent中去除。

@@ -17,7 +17,7 @@ class Service():
         chat_history = ''
         for q, a in history[-2:]:  # 取最近两轮历史记录进行总结
             chat_history += f'问题:{q}, 答案:{a}\n'
-        return llm_chain.run(query=message, chat_history=chat_history)
+        return llm_chain.invoke({'query':message, 'chat_history':chat_history})['text']
 
     def answer(self, message, history):
         if history:
